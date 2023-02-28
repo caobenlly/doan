@@ -5,14 +5,12 @@ import com.example.doantotnghiep.entity.User;
 import com.example.doantotnghiep.exception.BadRequestException;
 import com.example.doantotnghiep.model.dto.UserDTO;
 import com.example.doantotnghiep.model.mapper.UserMapper;
-import com.example.doantotnghiep.model.request.ChangePasswordRequest;
-import com.example.doantotnghiep.model.request.CreateUserRequest;
-import com.example.doantotnghiep.model.request.LoginRequest;
-import com.example.doantotnghiep.model.request.UpdateProfileRequest;
+import com.example.doantotnghiep.model.request.*;
 import com.example.doantotnghiep.security.CustomUserDetails;
 import com.example.doantotnghiep.security.JwtTokenUtil;
 import com.example.doantotnghiep.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -123,7 +121,35 @@ public class UserController {
         return ResponseEntity.ok("Cập nhật thành công");
     }
 
+    // reset password confirm
+    @GetMapping("/resetPasswordRequest")
+    // validate: email exists, email not active
+    public ResponseEntity<?> sendResetPasswordViaEmail(@RequestParam("email") String email) {
 
+//        userService.resetPasswordViaEmail(email);
+
+
+        return new ResponseEntity<>(userService.resetPasswordViaEmail(email), HttpStatus.OK);
+    }
+
+    @GetMapping("/authentificationotp")
+    // validate: email exists, email not active
+    public ResponseEntity<?> authentificationotp(@Valid @RequestBody AuthentificationOtp authentificationOtp) {
+
+        userService.authentificationotp(authentificationOtp);
+
+        return new ResponseEntity<>(userService.authentificationotp(authentificationOtp), HttpStatus.OK);
+    }
+
+    @GetMapping("/resetPassword")
+    // validate: check exists, check not expired
+    public ResponseEntity<?> resetPasswordViaEmail(@Valid @RequestBody ResetPassword resetPassword) {
+
+        // reset password
+        userService.resetPassword(resetPassword);
+
+        return new ResponseEntity<>("Reset Password success!", HttpStatus.OK);
+    }
 
 
 }

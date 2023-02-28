@@ -5,9 +5,7 @@ package com.example.doantotnghiep.service;
 import com.example.doantotnghiep.entity.MainResponse;
 import com.example.doantotnghiep.entity.User;
 import com.example.doantotnghiep.model.dto.UserDTO;
-import com.example.doantotnghiep.model.request.ChangePasswordRequest;
-import com.example.doantotnghiep.model.request.CreateUserRequest;
-import com.example.doantotnghiep.model.request.UpdateProfileRequest;
+import com.example.doantotnghiep.model.request.*;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -27,4 +25,6 @@ public interface UserService {
     MainResponse resetPasswordViaEmail(String email);
     void sendResetPasswordViaEmail(String email);
     User findUserByEmail(String email);
+    MainResponse resetPassword(ResetPassword resetPassword);
+    MainResponse authentificationotp(AuthentificationOtp authentificationOtp);
 }

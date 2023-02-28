@@ -10,9 +10,7 @@ import com.example.doantotnghiep.exception.BadRequestException;
 import com.example.doantotnghiep.exception.ErrorResponseBase;
 import com.example.doantotnghiep.model.dto.UserDTO;
 import com.example.doantotnghiep.model.mapper.UserMapper;
-import com.example.doantotnghiep.model.request.ChangePasswordRequest;
-import com.example.doantotnghiep.model.request.CreateUserRequest;
-import com.example.doantotnghiep.model.request.UpdateProfileRequest;
+import com.example.doantotnghiep.model.request.*;
 import com.example.doantotnghiep.responsitory.ResetPasswordTokenRepository;
 import com.example.doantotnghiep.responsitory.UserRepository;
 import com.example.doantotnghiep.service.UserService;
@@ -24,6 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,6 +40,8 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
     @Autowired
     private ApplicationEventPublisher eventPublisher;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private ResetPasswordTokenRepository resetPasswordTokenRepository;
     @Override
@@ -151,5 +152,56 @@ public class UserServiceImpl implements UserService {
     public User findUserByEmail(String email) {
 
         return userRepository.findByEmail(email);
+    }
+
+
+    @Override
+    public MainResponse authentificationotp(AuthentificationOtp authentificationOtp) {
+        log.info("xác thực otp");
+
+
+        int otpauthen = resetPasswordTokenRepository.findByOtp((int) findUserByEmail(authentificationOtp.getEmail()).getId());
+
+
+        String s = String.valueOf(otpauthen);
+        if (authentificationOtp.getOtp().equals(s) == false ){
+            throw new AppException(ErrorResponseBase.NOT_OTP);
+        }
+
+        if(findUserByEmail(authentificationOtp.getEmail())==null){
+            throw  new AppException(ErrorResponseBase.NOT_EXISTED);
+        }
+        User user = findUserByEmail(authentificationOtp.getEmail());
+
+        String token = resetPasswordTokenRepository.findByUserId((int) user.getId());
+        MainResponse response = new MainResponse();
+        response.setToken(token);
+        response.setMessage("Xác thực thành công");
+        return response;
+    }
+
+    @Override
+    public MainResponse resetPassword(ResetPassword resetPassword) {
+
+        log.info("đổi mật khẩu");
+// get token
+        ResetPasswordToken resetPasswordToken = resetPasswordTokenRepository.findByToken(resetPassword.getToken());
+
+        if(findUserByEmail(resetPassword.getEmail()) == null){
+            throw new AppException(ErrorResponseBase.NOT_FOUND);
+        }
+        // change password
+        User user = resetPasswordToken.getUser();
+        user.setPassword(passwordEncoder.encode(resetPassword.getNewpassword()));
+        userRepository.save(user);
+
+        // remove Reset Password
+        resetPasswordTokenRepository.deleteById(resetPasswordToken.getId());
+
+
+        MainResponse response = new MainResponse();
+        response.setToken(resetPassword.getToken());
+        response.setMessage("Đổi mật khẩu thành công");
+        return response;
     }
 }
