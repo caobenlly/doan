@@ -1,23 +1,29 @@
 package com.example.doantotnghiep.security;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.*;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**") // Cho phép tất cả các đường dẫn
-                .allowedOrigins("*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("authorization", "content-type", "x-auth-token")
-                .exposedHeaders("x-auth-token")
-                .allowCredentials(false).maxAge(3600);
-    }
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**") // Cho phép tất cả các đường dẫn
+//                .allowedOrigins("*")
+//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+//                .allowedHeaders("authorization", "content-type", "x-auth-token","Access-Control-Allow-Origin","Cache-Control")
+//                .exposedHeaders("x-auth-token","X-Total-Count")
+//                .allowCredentials(true).maxAge(3600);
+//    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
