@@ -20,9 +20,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 //        registry.addMapping("/**") // Cho phép tất cả các đường dẫn
 //                .allowedOrigins("*")
 //                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-//                .allowedHeaders("authorization", "content-type", "x-auth-token","Access-Control-Allow-Origin","Cache-Control")
+//                .allowedHeaders("authorization", "content-type", "x-auth-token")
 //                .exposedHeaders("x-auth-token","X-Total-Count")
-//                .allowCredentials(true).maxAge(3600);
+//                .allowCredentials(false).maxAge(3600);
 //    }
 
     @Override

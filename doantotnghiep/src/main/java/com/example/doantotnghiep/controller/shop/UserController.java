@@ -27,7 +27,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static com.example.doantotnghiep.config.Contant.MAX_AGE_COOKIE;
-
 @CrossOrigin("*")
 @RestController
 @RequestMapping("")
