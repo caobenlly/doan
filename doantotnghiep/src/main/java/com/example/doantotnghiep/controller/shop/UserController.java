@@ -3,6 +3,7 @@ package com.example.doantotnghiep.controller.shop;
 
 import com.example.doantotnghiep.entity.User;
 import com.example.doantotnghiep.exception.BadRequestException;
+import com.example.doantotnghiep.model.dto.BaseRespone;
 import com.example.doantotnghiep.model.dto.UserDTO;
 import com.example.doantotnghiep.model.mapper.UserMapper;
 import com.example.doantotnghiep.model.request.*;
@@ -121,7 +122,7 @@ public class UserController {
     }
 
     // reset password confirm
-    @GetMapping("/resetPasswordRequest")
+    @PostMapping("/resetPasswordRequest")
     // validate: email exists, email not active
     public ResponseEntity<?> sendResetPasswordViaEmail(@RequestParam("email") String email) {
 
@@ -131,7 +132,7 @@ public class UserController {
         return new ResponseEntity<>(userService.resetPasswordViaEmail(email), HttpStatus.OK);
     }
 
-    @GetMapping("/authentificationotp")
+    @PostMapping("/authentificationotp")
     // validate: email exists, email not active
     public ResponseEntity<?> authentificationotp(@Valid @RequestBody AuthentificationOtp authentificationOtp) {
 
@@ -140,14 +141,15 @@ public class UserController {
         return new ResponseEntity<>(userService.authentificationotp(authentificationOtp), HttpStatus.OK);
     }
 
-    @GetMapping("/resetPassword")
+    @PostMapping("/resetPassword")
     // validate: check exists, check not expired
     public ResponseEntity<?> resetPasswordViaEmail(@Valid @RequestBody ResetPassword resetPassword) {
 
         // reset password
         userService.resetPassword(resetPassword);
 
-        return new ResponseEntity<>("Reset Password success!", HttpStatus.OK);
+         BaseRespone baseRespone = new BaseRespone("Thành Công");
+        return new ResponseEntity<>(baseRespone, HttpStatus.OK);
     }
 
 

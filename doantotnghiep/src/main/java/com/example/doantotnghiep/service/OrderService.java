@@ -15,13 +15,13 @@ import java.util.List;
 public interface OrderService {
     Page<Order> adminGetListOrders(String id, String name, String phone, String status, String product, int page);
 
-    Order createOrder(CreateOrderRequest createOrderRequest, long userId);
+    Order createOrder(CreateOrderRequest createOrderRequest, int userId);
 
-    void updateDetailOrder(UpdateDetailOrder updateDetailOrder, long id, long userId);
+    void updateDetailOrder(UpdateDetailOrder updateDetailOrder, long id, int userId);
 
     Order findOrderById(long id);
 
-    void updateStatusOrder(UpdateStatusOrderRequest updateStatusOrderRequest, long orderId, long userId);
+    void updateStatusOrder(UpdateStatusOrderRequest updateStatusOrderRequest, long orderId, int userId);
 
     List<OrderInfoDTO> getListOrderOfPersonByStatus(int status, long userId);
 
