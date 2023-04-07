@@ -94,7 +94,7 @@ public interface ProductService {
 //    //Thêm ảnh feedBack
 //    void updatefeedBackImages(String id, UpdateFeedBackRequest req);
 //
-//    void updatefeedBackImages(String id, UpdateFeedBackRequest req);
+      void updatefeedBackImages(String id, UpdateFeedBackRequest req);
 
     //Lấy tất cả sản phẩm
     List<Product> getAllProduct();

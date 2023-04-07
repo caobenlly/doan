@@ -6,6 +6,7 @@ import com.example.doantotnghiep.model.dto.OrderInfoDTO;
 import com.example.doantotnghiep.model.request.CreateOrderRequest;
 import com.example.doantotnghiep.model.request.UpdateDetailOrder;
 import com.example.doantotnghiep.model.request.UpdateStatusOrderRequest;
+import com.example.doantotnghiep.model.responeadmin.OrdersAdminResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Service
 public interface OrderService {
-    Page<Order> adminGetListOrders(String id, String name, String phone, String status, String product, int page);
+//    Page<Order> adminGetListOrders(String id, String name, String phone, String status, String product, int page);
 
     Order createOrder(CreateOrderRequest createOrderRequest, int userId);
 
@@ -32,4 +33,5 @@ public interface OrderService {
     //Đếm số lượng đơn hàng
     long getCountOrder();
 
+    List<OrdersAdminResponse> adminGetListOrders(int page);
 }

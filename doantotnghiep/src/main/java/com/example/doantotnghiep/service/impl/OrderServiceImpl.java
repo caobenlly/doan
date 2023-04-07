@@ -9,12 +9,14 @@ import com.example.doantotnghiep.model.dto.OrderInfoDTO;
 import com.example.doantotnghiep.model.request.CreateOrderRequest;
 import com.example.doantotnghiep.model.request.UpdateDetailOrder;
 import com.example.doantotnghiep.model.request.UpdateStatusOrderRequest;
+import com.example.doantotnghiep.model.responeadmin.OrdersAdminResponse;
 import com.example.doantotnghiep.responsitory.OrderRepository;
 import com.example.doantotnghiep.responsitory.ProductRepository;
 import com.example.doantotnghiep.responsitory.ProductSizeRepository;
 import com.example.doantotnghiep.responsitory.StatisticRepository;
 import com.example.doantotnghiep.service.OrderService;
 import com.example.doantotnghiep.service.PromotionService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,15 +48,26 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private StatisticRepository statisticRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
     @Override
-    public Page<Order> adminGetListOrders(String id, String name, String phone, String status, String product, int page) {
+    public List<OrdersAdminResponse> adminGetListOrders(int page) {
         page--;
         if (page < 0) {
             page = 0;
         }
         int limit = 10;
         Pageable pageable = PageRequest.of(page, limit, Sort.by("created_at").descending());
-        return orderRepository.adminGetListOrder(id, name, phone, status, product, pageable);
+        List<Order> order = orderRepository.findAll();
+        List<OrdersAdminResponse> listRespone = null;
+            for (Order orderlist : order) {
+                OrdersAdminResponse ordersAdminResponse =  modelMapper.map(orderlist, OrdersAdminResponse.class);
+                ordersAdminResponse.setSanPham(orderlist.getProduct().getName());
+                ordersAdminResponse.setNgayTao(orderlist.getProduct().getCreatedAt().toString());
+                ordersAdminResponse.setNgaySua(orderlist.getProduct().getModifiedAt().toString());
+                listRespone.add(ordersAdminResponse);
+            }
+        return listRespone;
     }
 
 

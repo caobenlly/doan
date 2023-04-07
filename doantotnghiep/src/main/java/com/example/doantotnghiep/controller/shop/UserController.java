@@ -34,7 +34,8 @@ import static com.example.doantotnghiep.config.Contant.MAX_AGE_COOKIE;
 @Validated
 public class UserController {
 
-
+    private static final String PREFIX_TOKEN = "Bearer";
+    private static final String AUTHORIZATION = "Authorization";
     @Autowired
     private UserService userService;
     @Autowired
@@ -66,13 +67,19 @@ public class UserController {
             //Gen token
             String token = jwtTokenUtil.generateToken((CustomUserDetails) authentication.getPrincipal());
 
-            //Add token to cookie to login
-            Cookie cookie = new Cookie("JWT_TOKEN", token);
-            cookie.setMaxAge(MAX_AGE_COOKIE);
-            cookie.setPath("/");
-            response.addCookie(cookie);
+//            //Add token to cookie to login
+//            Cookie cookie = new Cookie("JWT_TOKEN", token);
+//            cookie.setMaxAge(MAX_AGE_COOKIE);
+//            cookie.setPath("/");
+//            response.addCookie(cookie);
 
-            return ResponseEntity.ok(UserMapper.toUserDTO(((CustomUserDetails) authentication.getPrincipal()).getUser()));
+            //add token to header to login
+            response.addHeader(AUTHORIZATION, PREFIX_TOKEN + " " + token);
+            String jwt = PREFIX_TOKEN + " " + token;
+            UserDTO userDTO = UserMapper.toUserDTO(((CustomUserDetails) authentication.getPrincipal()).getUser());
+            userDTO.setToken(jwt);
+          return ResponseEntity.ok(userDTO);
+
         } catch (Exception ex) {
             throw new BadRequestException("Email hoặc mật khẩu không chính xác!");
 

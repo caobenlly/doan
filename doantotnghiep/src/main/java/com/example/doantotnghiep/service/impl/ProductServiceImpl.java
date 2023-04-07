@@ -387,22 +387,22 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.count();
     }
 
-//    @Override
-//    public void updatefeedBackImages(String id, UpdateFeedBackRequest req) {
-//        // Check product exist
-//        Optional<Product> rs = productRepository.findById(id);
-//        if (rs == null) {
-//            throw new NotFoundException("Sản phẩm không tồn tại");
-//        }
-//
-//        Product product = rs.get();
-//        product.setImageFeedBack(req.getFeedBackImages());
-//        try {
-//            productRepository.save(product);
-//        } catch (Exception ex) {
-//            throw new InternalServerException("Lỗi khi cập nhật hình ảnh on feet");
-//        }
-//    }
+    @Override
+    public void updatefeedBackImages(String id, UpdateFeedBackRequest req) {
+        // Check product exist
+        Optional<Product> rs = productRepository.findById(id);
+        if (rs == null) {
+            throw new NotFoundException("Sản phẩm không tồn tại");
+        }
+
+        Product product = rs.get();
+        product.setImageFeedBack(req.getFeedBackImages());
+        try {
+            productRepository.save(product);
+        } catch (Exception ex) {
+            throw new InternalServerException("Lỗi khi cập nhật hình ảnh on feet");
+        }
+    }
 
     @Override
     public List<Product> getAllProduct() {

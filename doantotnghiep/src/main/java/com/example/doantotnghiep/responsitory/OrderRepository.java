@@ -17,18 +17,18 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "WHERE id LIKE CONCAT('%',?1,'%') " +
             "AND receiver_name LIKE CONCAT('%',?2,'%') " +
             "AND receiver_phone LIKE CONCAT('%',?3,'%') " +
-            "AND status LIKE CONCAT('%',?4,'%') " +
-            "AND product_id LIKE CONCAT('%',?5,'%')", nativeQuery = true)
+            "AND status LIKE CONCAT('%',?4,'%') " , nativeQuery = true)
+//            "AND product_id LIKE CONCAT('%',?5,'%')", nativeQuery = true)
     Page<Order> adminGetListOrder(String id, String name, String phone, String status, String product, Pageable pageable);
-
+    //    Page<Order> adminGetListOrder(String id, String name, String phone, String status, String product, Pageable pageable);
     @Query(nativeQuery = true, name = "getListOrderOfPersonByStatus")
     List<OrderInfoDTO> getListOrderOfPersonByStatus(int status, long userId);
 
     @Query(nativeQuery = true, name = "userGetDetailById")
     OrderDetailDTO userGetDetailById(long id, long userId);
 
-//    @Query(value = "select count(product_id) AS A from orders where product_id = ?1;", nativeQuery = true)
-//    int countByProductIds(String id);
+    @Query(value = "select count(product_id) AS A from orders where product_id = ?1;", nativeQuery = true)
+    int countByProductIds(String id);
 
     int countByProductId(String id);
 }

@@ -2,6 +2,7 @@ package com.example.doantotnghiep.entity;
 
 import com.example.doantotnghiep.model.dto.OrderDetailDTO;
 import com.example.doantotnghiep.model.dto.OrderInfoDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -74,6 +75,7 @@ import java.sql.Timestamp;
 @Getter
 @Entity
 @Table(name = "orders")
+
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
