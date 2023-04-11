@@ -1,6 +1,7 @@
 package com.example.doantotnghiep.service.impl;
 
 import com.example.doantotnghiep.entity.*;
+import com.example.doantotnghiep.exception.AppException;
 import com.example.doantotnghiep.exception.BadRequestException;
 import com.example.doantotnghiep.exception.InternalServerException;
 import com.example.doantotnghiep.exception.NotFoundException;
@@ -25,6 +26,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,12 +61,24 @@ public class OrderServiceImpl implements OrderService {
         int limit = 10;
         Pageable pageable = PageRequest.of(page, limit, Sort.by("created_at").descending());
         List<Order> order = orderRepository.findAll();
-        List<OrdersAdminResponse> listRespone = null;
+        List<OrdersAdminResponse> listRespone = new ArrayList<>();
             for (Order orderlist : order) {
-                OrdersAdminResponse ordersAdminResponse =  modelMapper.map(orderlist, OrdersAdminResponse.class);
+                OrdersAdminResponse ordersAdminResponse = new OrdersAdminResponse();
+                Optional<Product> product = productRepository.findById(orderlist.getProduct().getId());
+                if (product ==null){
+                    throw new BadRequestException("Không có sản phẩm ");
+                }
+                ordersAdminResponse.setId(orderlist.getId());
+                ordersAdminResponse.setNguoiNhan(orderlist.getReceiverName());
+                ordersAdminResponse.setDienThoai(orderlist.getReceiverPhone());
+                ordersAdminResponse.setTrangThai(String.valueOf(orderlist.getStatus()));
                 ordersAdminResponse.setSanPham(orderlist.getProduct().getName());
-                ordersAdminResponse.setNgayTao(orderlist.getProduct().getCreatedAt().toString());
-                ordersAdminResponse.setNgaySua(orderlist.getProduct().getModifiedAt().toString());
+                if (product.get().getCreatedAt() != null) {
+                    ordersAdminResponse.setNgayTao(product.get().getCreatedAt().toString());
+                }
+                if (product.get().getModifiedAt() != null) {
+                    ordersAdminResponse.setNgaySua(product.get().getModifiedAt().toString());
+                }
                 listRespone.add(ordersAdminResponse);
             }
         return listRespone;

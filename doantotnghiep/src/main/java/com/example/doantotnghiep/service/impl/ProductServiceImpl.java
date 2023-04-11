@@ -1,11 +1,7 @@
 package com.example.doantotnghiep.service.impl;
 
-import com.example.doantotnghiep.entity.Product;
-import com.example.doantotnghiep.entity.ProductSize;
-import com.example.doantotnghiep.entity.Promotion;
-import com.example.doantotnghiep.exception.BadRequestException;
-import com.example.doantotnghiep.exception.InternalServerException;
-import com.example.doantotnghiep.exception.NotFoundException;
+import com.example.doantotnghiep.entity.*;
+import com.example.doantotnghiep.exception.*;
 import com.example.doantotnghiep.model.dto.DetailProductInfoDTO;
 import com.example.doantotnghiep.model.dto.PageableDTO;
 import com.example.doantotnghiep.model.dto.ProductInfoDTO;
@@ -15,25 +11,22 @@ import com.example.doantotnghiep.model.request.CreateProductRequest;
 import com.example.doantotnghiep.model.request.CreateSizeCountRequest;
 import com.example.doantotnghiep.model.request.FilterProductRequest;
 import com.example.doantotnghiep.model.request.UpdateFeedBackRequest;
-import com.example.doantotnghiep.responsitory.OrderRepository;
-import com.example.doantotnghiep.responsitory.ProductRepository;
-import com.example.doantotnghiep.responsitory.ProductSizeRepository;
-import com.example.doantotnghiep.responsitory.PromotionRepository;
+import com.example.doantotnghiep.model.responeadmin.ProductsAdminResponse;
+import com.example.doantotnghiep.responsitory.*;
 import com.example.doantotnghiep.service.ProductService;
 import com.example.doantotnghiep.service.PromotionService;
 import com.example.doantotnghiep.utils.PageUtil;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.example.doantotnghiep.config.Contant.*;
 
@@ -55,14 +48,18 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private ProductCategoryReponsitory productCategoryReponsitory;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @Override
-    public Page<Product> adminGetListProduct(String id, String name, String category, String brand, Integer page) {
-        page--;
-        if (page < 0) {
-            page = 0;
-        }
-        Pageable pageable = PageRequest.of(page, LIMIT_PRODUCT, Sort.by("created_at").descending());
-        return productRepository.adminGetListProducts(id, name, category, brand, pageable);
+    public List<ProductsAdminResponse> adminGetListProduct() {
+
+        List<ProductsAdminResponse> adminResponses = productRepository.adminGetListProducts();
+
+        return  adminResponses;
     }
 
     @Override

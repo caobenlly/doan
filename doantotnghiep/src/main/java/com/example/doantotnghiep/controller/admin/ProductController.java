@@ -1,9 +1,12 @@
 package com.example.doantotnghiep.controller.admin;
 
 import com.example.doantotnghiep.entity.*;
+import com.example.doantotnghiep.exception.AppException;
+import com.example.doantotnghiep.exception.ErrorResponseBase;
 import com.example.doantotnghiep.model.request.CreateProductRequest;
 import com.example.doantotnghiep.model.request.CreateSizeCountRequest;
 import com.example.doantotnghiep.model.request.UpdateFeedBackRequest;
+import com.example.doantotnghiep.model.responeadmin.ProductsAdminResponse;
 import com.example.doantotnghiep.security.CustomUserDetails;
 import com.example.doantotnghiep.service.BrandService;
 import com.example.doantotnghiep.service.CategoryService;
@@ -28,11 +31,13 @@ import javax.validation.Valid;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.doantotnghiep.config.Contant.SIZE_VN;
 
 @Slf4j
 @Controller
+@CrossOrigin("*")
 public class ProductController {
 
     private String xlsx = ".xlsx";
@@ -70,12 +75,11 @@ public class ProductController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         //Lấy danh sách sản phẩm
-        Page<Product> products = productService.adminGetListProduct(id, name, category, brand, page);
-        model.addAttribute("products", products.getContent());
-        model.addAttribute("totalPages", products.getTotalPages());
-        model.addAttribute("currentPage", products.getPageable().getPageNumber() + 1);
 
-        return ResponseEntity.ok(model);
+        List<ProductsAdminResponse> products = productService.adminGetListProduct();
+
+
+        return ResponseEntity.ok(products);
     }
 
     @GetMapping("/admin/products/create")
@@ -131,7 +135,7 @@ public class ProductController {
                                                   @RequestParam(defaultValue = "", required = false) String category,
                                                   @RequestParam(defaultValue = "", required = false) String brand,
                                                   @RequestParam(defaultValue = "1", required = false) Integer page) {
-        Page<Product> products = productService.adminGetListProduct(id, name, category, brand, page);
+        List<ProductsAdminResponse> products = productService.adminGetListProduct();
         return ResponseEntity.ok(products);
     }
 

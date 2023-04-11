@@ -2,16 +2,20 @@ package com.example.doantotnghiep.model.responeadmin;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class OrdersAdminResponse {
 
-    String maDonhang;
-    String nguoiNhan;
-    String dienThoai;
-    String trangThai;
-    String sanPham;
-    String ngayTao;
-    String ngaySua;
+    private Long id;
+    private String nguoiNhan;
+    private String dienThoai;
+    private String trangThai;
+    private String sanPham;
+    private String ngayTao;
+    private String ngaySua;
+
+
 }

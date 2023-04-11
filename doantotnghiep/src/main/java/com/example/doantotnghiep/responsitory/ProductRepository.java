@@ -4,6 +4,7 @@ import com.example.doantotnghiep.entity.Product;
 import com.example.doantotnghiep.model.dto.ChartDTO;
 import com.example.doantotnghiep.model.dto.ProductInfoDTO;
 import com.example.doantotnghiep.model.dto.ShortProductInfoDTO;
+import com.example.doantotnghiep.model.responeadmin.ProductsAdminResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, String> {
@@ -22,20 +24,22 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     Product findByName(String name);
 
     //Lấy tất cả sản phẩm
-    @Query(value = "SELECT * FROM product pro right join (SELECT DISTINCT p.* FROM product p " +
-            "INNER JOIN product_category pc ON p.id = pc.product_id " +
-            "INNER JOIN category c ON c.id = pc.category_id " +
-            "WHERE p.id LIKE CONCAT('%',?1,'%') " +
-            "AND p.name LIKE CONCAT('%',?2,'%') " +
-            "AND c.id LIKE CONCAT('%',?3,'%') " +
-            "AND p.brand_id LIKE CONCAT('%',?4,'%')) as tb1 on pro.id=tb1.id", nativeQuery = true)
-    Page<Product> adminGetListProducts(String id, String name, String category, String brand, Pageable pageable);
+//    @Query(value = "SELECT * FROM product pro right join (SELECT DISTINCT p.* FROM product p " +
+//            "INNER JOIN product_category pc ON p.id = pc.product_id " +
+//            "INNER JOIN category c ON c.id = pc.category_id " +
+//            "WHERE p.id LIKE CONCAT('%',?1,'%') " +
+//            "AND p.name LIKE CONCAT('%',?2,'%') " +
+//            "AND c.id LIKE CONCAT('%',?3,'%') " +
+//            "AND p.brand_id LIKE CONCAT('%',?4,'%')) as tb1 on pro.id=tb1.id", nativeQuery = true)
 
-//    @Query(value = "SELECT NEW com.example.doantotnghiep.model.dto.ProductInfoDTO(p.id, p.name, p.slug, p.price ,p.images ->> '$[0]', p.total_sold) " +
-//            "FROM product p " +
-//            "WHERE p.status = 1 " +
-//            "ORDER BY p.created_at DESC limit ?1",nativeQuery = true)
-//    List<ProductInfoDTO> getListBestSellProducts(int limit);
+    @Query(value = " SELECT NEW com.example.doantotnghiep.model.responeadmin.ProductsAdminResponse(a,b,d) FROM Product a INNER JOIN Brand b on a.brand.id = b.id INNER JOIN ProductCategory c on a.id = c.id INNER JOIN Category d on c.categoryId = d.id")
+    List<ProductsAdminResponse> adminGetListProducts();
+
+    @Query(value = "SELECT NEW com.example.doantotnghiep.model.dto.ProductInfoDTO(p.id, p.name, p.slug, p.price ,p.images ->> '$[0]', p.total_sold) " +
+            "FROM product p " +
+            "WHERE p.status = 1 " +
+            "ORDER BY p.created_at DESC limit ?1",nativeQuery = true)
+    List<ProductInfoDTO> getListBestSellProducts1(int limit);
 
     //Lấy sản phẩm được bán nhiều
     @Query(nativeQuery = true,name = "getListBestSellProducts")

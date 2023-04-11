@@ -12,16 +12,17 @@ import com.example.doantotnghiep.model.request.CreateProductRequest;
 import com.example.doantotnghiep.model.request.CreateSizeCountRequest;
 import com.example.doantotnghiep.model.request.FilterProductRequest;
 import com.example.doantotnghiep.model.request.UpdateFeedBackRequest;
-import org.springframework.data.domain.Page;
+import com.example.doantotnghiep.model.responeadmin.ProductsAdminResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface ProductService {
 
     //Lấy sản phẩm
-    Page<Product> adminGetListProduct(String id, String name, String category, String brand, Integer page);
+    List<ProductsAdminResponse> adminGetListProduct();
 
     //Tạo sản phẩm
     Product createProduct(CreateProductRequest createProductRequest);
@@ -59,7 +60,6 @@ public interface ProductService {
     List<Integer> getListAvailableSize(String id);
 
 //    //Nhập số lượng theo size
-//    void createSizeCount(CreateSizeCountRequest createSizeCountRequest);
 
     void createSizeCount(CreateSizeCountRequest createSizeCountRequest);
 
@@ -92,8 +92,7 @@ public interface ProductService {
     long getCountProduct();
 
 //    //Thêm ảnh feedBack
-//    void updatefeedBackImages(String id, UpdateFeedBackRequest req);
-//
+
       void updatefeedBackImages(String id, UpdateFeedBackRequest req);
 
     //Lấy tất cả sản phẩm
