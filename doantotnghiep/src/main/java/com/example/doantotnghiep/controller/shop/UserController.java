@@ -3,6 +3,7 @@ package com.example.doantotnghiep.controller.shop;
 
 import com.example.doantotnghiep.entity.User;
 import com.example.doantotnghiep.exception.BadRequestException;
+import com.example.doantotnghiep.model.dto.BaseRespone;
 import com.example.doantotnghiep.model.dto.UserDTO;
 import com.example.doantotnghiep.model.mapper.UserMapper;
 import com.example.doantotnghiep.model.request.*;
@@ -27,14 +28,14 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static com.example.doantotnghiep.config.Contant.MAX_AGE_COOKIE;
-
 @CrossOrigin("*")
 @RestController
 @RequestMapping("")
 @Validated
 public class UserController {
 
-
+    private static final String PREFIX_TOKEN = "Bearer";
+    private static final String AUTHORIZATION = "Authorization";
     @Autowired
     private UserService userService;
     @Autowired
@@ -66,13 +67,19 @@ public class UserController {
             //Gen token
             String token = jwtTokenUtil.generateToken((CustomUserDetails) authentication.getPrincipal());
 
-            //Add token to cookie to login
-            Cookie cookie = new Cookie("JWT_TOKEN", token);
-            cookie.setMaxAge(MAX_AGE_COOKIE);
-            cookie.setPath("/");
-            response.addCookie(cookie);
+//            //Add token to cookie to login
+//            Cookie cookie = new Cookie("JWT_TOKEN", token);
+//            cookie.setMaxAge(MAX_AGE_COOKIE);
+//            cookie.setPath("/");
+//            response.addCookie(cookie);
 
-            return ResponseEntity.ok(UserMapper.toUserDTO(((CustomUserDetails) authentication.getPrincipal()).getUser()));
+            //add token to header to login
+            response.addHeader(AUTHORIZATION, PREFIX_TOKEN + " " + token);
+            String jwt = PREFIX_TOKEN + " " + token;
+            UserDTO userDTO = UserMapper.toUserDTO(((CustomUserDetails) authentication.getPrincipal()).getUser());
+            userDTO.setToken(jwt);
+          return ResponseEntity.ok(userDTO);
+
         } catch (Exception ex) {
             throw new BadRequestException("Email hoặc mật khẩu không chính xác!");
 
@@ -122,7 +129,7 @@ public class UserController {
     }
 
     // reset password confirm
-    @GetMapping("/resetPasswordRequest")
+    @PostMapping("/resetPasswordRequest")
     // validate: email exists, email not active
     public ResponseEntity<?> sendResetPasswordViaEmail(@RequestParam("email") String email) {
 
@@ -132,7 +139,7 @@ public class UserController {
         return new ResponseEntity<>(userService.resetPasswordViaEmail(email), HttpStatus.OK);
     }
 
-    @GetMapping("/authentificationotp")
+    @PostMapping("/authentificationotp")
     // validate: email exists, email not active
     public ResponseEntity<?> authentificationotp(@Valid @RequestBody AuthentificationOtp authentificationOtp) {
 
@@ -141,14 +148,15 @@ public class UserController {
         return new ResponseEntity<>(userService.authentificationotp(authentificationOtp), HttpStatus.OK);
     }
 
-    @GetMapping("/resetPassword")
+    @PostMapping("/resetPassword")
     // validate: check exists, check not expired
     public ResponseEntity<?> resetPasswordViaEmail(@Valid @RequestBody ResetPassword resetPassword) {
 
         // reset password
         userService.resetPassword(resetPassword);
 
-        return new ResponseEntity<>("Reset Password success!", HttpStatus.OK);
+         BaseRespone baseRespone = new BaseRespone("Thành Công");
+        return new ResponseEntity<>(baseRespone, HttpStatus.OK);
     }
 
 
