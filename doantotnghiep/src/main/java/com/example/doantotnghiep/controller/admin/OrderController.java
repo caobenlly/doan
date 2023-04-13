@@ -81,7 +81,7 @@ public class OrderController {
 //        //Get list valid promotion
         List<Promotion> promotions = promotionService.getAllValidPromotion();
         model.addAttribute("promotions", promotions);
-        return ResponseEntity.ok(promotions);
+        return ResponseEntity.ok(model);
     }
 
     @PostMapping("/api/admin/orders")
