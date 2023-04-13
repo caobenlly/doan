@@ -30,13 +30,8 @@ public class BrandServiceImpl implements BrandService {
     private BrandRepository brandRepository;
 
     @Override
-    public Page<Brand> adminGetListBrands(String id, String name, String status, Integer page) {
-        page--;
-        if (page < 0) {
-            page = 0;
-        }
-        Pageable pageable = PageRequest.of(page, LIMIT_BRAND, Sort.by("created_at").descending());
-        return brandRepository.adminGetListBrands(id, name, status, pageable);
+    public  List<Brand> adminGetListBrands(String id, String name, String status) {
+        return brandRepository.adminGetListBrands(id, name, status);
 
     }
 

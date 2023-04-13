@@ -39,8 +39,7 @@ public class PostController {
 
         Page<Post> result = postService.adminGetListPosts(title, status, page);
         model.addAttribute("posts", result.getContent());
-        model.addAttribute("totalPages", result.getTotalPages());
-        model.addAttribute("currentPage", result.getPageable().getPageNumber() +1);
+
 
         return ResponseEntity.ok(model);
     }

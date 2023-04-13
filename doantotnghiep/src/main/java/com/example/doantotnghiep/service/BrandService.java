@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 public interface BrandService {
-    Page<Brand> adminGetListBrands(String id, String name, String status, Integer page);
+    List<Brand> adminGetListBrands(String id, String name, String status);
 
     List<Brand> getListBrand();
 

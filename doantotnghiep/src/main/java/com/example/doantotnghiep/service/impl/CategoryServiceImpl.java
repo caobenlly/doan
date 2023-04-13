@@ -27,13 +27,8 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
-    public Page<Category> adminGetListCategory(String id, String name, String status, int page) {
-        page--;
-        if (page <= 0) {
-            page = 0;
-        }
-        Pageable pageable = PageRequest.of(page, LIMIT_CATEGORY, Sort.by("created_at").descending());
-        return categoryRepository.adminGetListCategory(id, name, status, pageable);
+    public List<Category> adminGetListCategory(String id, String name, String status) {
+        return categoryRepository.adminGetListCategory(id, name, status);
     }
 
     @Override

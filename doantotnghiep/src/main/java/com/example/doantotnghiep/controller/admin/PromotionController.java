@@ -30,8 +30,6 @@ public class PromotionController {
 
         Page<Promotion> promotionPage = promotionService.adminGetListPromotion(code, name, publish, active, page);
         model.addAttribute("promotionPage", promotionPage);
-        model.addAttribute("totalPages", promotionPage.getTotalPages());
-        model.addAttribute("currentPage", promotionPage.getPageable().getPageNumber() + 1);
         return ResponseEntity.ok(model);
     }
 

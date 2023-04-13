@@ -66,13 +66,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> adminListUserPages(String fullName, String phone, String email, Integer page) {
-        page--;
-        if (page < 0) {
-            page = 0;
-        }
-        Pageable pageable = PageRequest.of(page, LIMIT_USER, Sort.by("created_at").descending());
-        return userRepository.adminListUserPages(fullName, phone, email, pageable);
+    public List<User> adminListUserPages(String fullName, String phone, String email) {
+        return userRepository.adminListUserPages(fullName, phone, email);
     }
 
 

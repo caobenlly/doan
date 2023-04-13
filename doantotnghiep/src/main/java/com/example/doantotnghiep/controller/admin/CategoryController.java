@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @CrossOrigin("*")
@@ -26,12 +27,8 @@ public class CategoryController {
                            @RequestParam(defaultValue = "",required = false) String status,
                            @RequestParam(defaultValue = "1",required = false) Integer page){
 
-        Page<Category> categories = categoryService.adminGetListCategory(id,name,status,page);
-        model.addAttribute("categories",categories.getContent());
-        model.addAttribute("totalPages",categories.getTotalPages());
-        model.addAttribute("currentPage", categories.getPageable().getPageNumber() + 1);
-
-        return ResponseEntity.ok(model);
+       List<Category> categories = categoryService.adminGetListCategory(id,name,status);
+        return ResponseEntity.ok(categories);
     }
 
 
@@ -40,7 +37,7 @@ public class CategoryController {
                                                          @RequestParam(defaultValue = "",required = false) String name,
                                                          @RequestParam(defaultValue = "",required = false) String status,
                                                          @RequestParam(defaultValue = "0",required = false) Integer page){
-        Page<Category> categories = categoryService.adminGetListCategory(id,name,status,page);
+        List<Category> categories = categoryService.adminGetListCategory(id,name,status);
         return ResponseEntity.ok(categories);
 
     }

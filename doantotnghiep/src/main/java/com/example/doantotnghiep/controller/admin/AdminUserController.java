@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 @CrossOrigin("*")
 public class AdminUserController {
@@ -27,11 +29,8 @@ public class AdminUserController {
                             @RequestParam(defaultValue = "", required = false) String email,
                             @RequestParam(defaultValue = "", required = false) String address,
                             @RequestParam(defaultValue = "1", required = false) Integer page) {
-        Page<User> users = userService.adminListUserPages(fullName, phone, email, page);
-        model.addAttribute("users", users.getContent());
-        model.addAttribute("totalPages", users.getTotalPages());
-        model.addAttribute("currentPage", users.getPageable().getPageNumber() + 1);
-        return ResponseEntity.ok(model);
+        List<User> users = (List<User>) userService.adminListUserPages(fullName, phone, email);
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/api/admin/users/list")
@@ -40,7 +39,7 @@ public class AdminUserController {
                                                    @RequestParam(defaultValue = "", required = false) String email,
                                                    @RequestParam(defaultValue = "", required = false) String address,
                                                    @RequestParam(defaultValue = "1", required = false) Integer page) {
-        Page<User> users = userService.adminListUserPages(fullName, phone, email, page);
+        List<User> users = userService.adminListUserPages(fullName, phone, email);
         return ResponseEntity.ok(users);
     }
 }

@@ -21,7 +21,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             "WHERE c.id LIKE CONCAT('%',?1,'%') " +
             "AND c.name LIKE CONCAT('%',?2,'%') " +
             "AND c.status LIKE CONCAT('%',?3,'%')", nativeQuery = true)
-    Page<Category> adminGetListCategory(String id, String name, String status, Pageable pageable);
+    List<Category> adminGetListCategory(String id, String name, String status);
 
     @Query(name = "getProductOrderCategories",nativeQuery = true)
     List<ChartDTO> getListProductOrderCategories();

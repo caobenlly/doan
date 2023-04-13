@@ -41,10 +41,8 @@ public class BrandController {
         List<String> images = imageService.getListImageOfUser(user.getId());
         model.addAttribute("images", images);
 
-        Page<Brand> brands = brandService.adminGetListBrands(id, name, status, page);
-        model.addAttribute("brands", brands.getContent());
-        model.addAttribute("totalPages", brands.getTotalPages());
-        model.addAttribute("currentPage", brands.getPageable().getPageNumber() + 1);
+        List<Brand> brands = brandService.adminGetListBrands(id, name, status);
+        model.addAttribute("brands", brands);
         return ResponseEntity.ok(model);
     }
 
