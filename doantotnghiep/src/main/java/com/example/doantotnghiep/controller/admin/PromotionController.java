@@ -36,8 +36,8 @@ public class PromotionController {
     }
 
     @GetMapping("/admin/promotions/create")
-    public String createPromotionPage(Model model) {
-        return "admin/promotion/create";
+    public ResponseEntity<Object> createPromotionPage(Model model) {
+        return ResponseEntity.ok(model);
     }
 
     @PostMapping("/api/admin/promotions")
@@ -47,10 +47,10 @@ public class PromotionController {
     }
 
     @GetMapping("/admin/promotions/update/{id}")
-    public String updatePromotionPage(Model model, @PathVariable long id) {
+    public ResponseEntity<Object> updatePromotionPage(Model model, @PathVariable long id) {
         Promotion promotion = promotionService.findPromotionById(id);
         model.addAttribute("promotion", promotion);
-        return "admin/promotion/edit";
+        return ResponseEntity.ok(model);
     }
 
     @PutMapping("/api/admin/promotions/{id}")

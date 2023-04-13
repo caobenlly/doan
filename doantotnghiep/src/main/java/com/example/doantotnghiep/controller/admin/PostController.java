@@ -45,13 +45,13 @@ public class PostController {
     }
 
     @GetMapping("/admin/posts/create")
-    public String getPostCreatePage(Model model) {
+    public ResponseEntity<Object> getPostCreatePage(Model model) {
         // Get list image of user
         User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
         List<String> images = imageService.getListImageOfUser(user.getId());
         model.addAttribute("images", images);
 
-        return "admin/post/create";
+        return ResponseEntity.ok(model);
     }
 
     @GetMapping("/api/admin/posts")
@@ -71,7 +71,7 @@ public class PostController {
     }
 
     @GetMapping("/admin/posts/{slug}/{id}")
-    public String getPostDetailPage(Model model, @PathVariable long id) {
+    public ResponseEntity<Object> getPostDetailPage(Model model, @PathVariable long id) {
         // Get list image of user
         User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
         List<String> images = imageService.getListImageOfUser(user.getId());
@@ -80,7 +80,7 @@ public class PostController {
         Post post = postService.getPostById(id);
         model.addAttribute("post", post);
 
-        return "admin/post/edit";
+        return ResponseEntity.ok(model);
     }
 
     @PutMapping("/api/admin/posts/{id}")
