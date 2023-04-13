@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -68,7 +69,7 @@ public class OrderController {
     }
 
     @GetMapping("/admin/orders/create")
-    public String createOrderPage(Model model) {
+    public ResponseEntity<Object> createOrderPage(Model model) {
 
         //Get list product
         List<ShortProductInfoDTO> products = productService.getAvailableProducts();
@@ -80,7 +81,7 @@ public class OrderController {
 //        //Get list valid promotion
         List<Promotion> promotions = promotionService.getAllValidPromotion();
         model.addAttribute("promotions", promotions);
-        return "admin/order/create";
+        return ResponseEntity.ok(promotions);
     }
 
     @PostMapping("/api/admin/orders")
@@ -91,7 +92,7 @@ public class OrderController {
     }
 
     @GetMapping("/admin/orders/update/{id}")
-    public String updateOrderPage(Model model, @PathVariable long id) {
+    public ResponseEntity<Object> updateOrderPage(Model model, @PathVariable long id) {
 
         Order order = orderService.findOrderById(id);
         model.addAttribute("order", order);
@@ -122,7 +123,7 @@ public class OrderController {
             model.addAttribute("sizeIsAvailable", sizeIsAvailable);
         }
 
-        return "admin/order/edit";
+        return ResponseEntity.ok(model);
     }
 
     @PutMapping("/api/admin/orders/update-detail/{id}")
@@ -140,14 +141,14 @@ public class OrderController {
     }
 
     @GetMapping("/tai-khoan/lich-su-giao-dich")
-    public String getOrderHistoryPage(Model model){
+    public ResponseEntity<Object> getOrderHistoryPage(Model model){
 
         //Get list order pending
         User user =((CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
         List<OrderInfoDTO> orderList = orderService.getListOrderOfPersonByStatus(ORDER_STATUS,user.getId());
         model.addAttribute("orderList",orderList);
 
-        return "shop/order_history";
+        return ResponseEntity.ok(model);
     }
 
     @GetMapping("/api/get-order-list")
@@ -164,12 +165,12 @@ public class OrderController {
     }
 
     @GetMapping("/tai-khoan/lich-su-giao-dich/{id}")
-    public String getDetailOrderPage(Model model, @PathVariable int id) {
+    public ResponseEntity<Object> getDetailOrderPage(Model model, @PathVariable int id) {
         User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
 
         OrderDetailDTO order = orderService.userGetDetailById(id, user.getId());
         if (order == null) {
-            return "error/404";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có đơn hàng");
         }
         model.addAttribute("order", order);
 
@@ -179,7 +180,7 @@ public class OrderController {
             model.addAttribute("canCancel", false);
         }
 
-        return "shop/order-detail";
+        return ResponseEntity.ok(model);
     }
 
     @PostMapping("/api/cancel-order/{id}")
