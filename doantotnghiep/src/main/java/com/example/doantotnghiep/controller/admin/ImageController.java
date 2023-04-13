@@ -22,6 +22,7 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin("*")
 public class ImageController {
     private static String UPLOAD_DIR = System.getProperty("user.home") + "/media/upload";
 
