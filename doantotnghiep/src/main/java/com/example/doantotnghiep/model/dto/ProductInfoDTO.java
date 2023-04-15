@@ -1,27 +1,33 @@
 package com.example.doantotnghiep.model.dto;
 
+import com.example.doantotnghiep.entity.Product;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
-@Getter
+import java.util.ArrayList;
+
+
+@Data
+@NoArgsConstructor
 public class ProductInfoDTO {
     private String id;
     private String name;
     private String slug;
     private long price;
     private int views;
-    private String images;
-    private int totalSold;
+    private ArrayList images;
+    private long totalSold;
     private long promotionPrice;
 
-    public ProductInfoDTO(String id, String name, String slug, long price, int views, String images, int totalSold) {
-        this.id = id;
-        this.name = name;
-        this.slug = slug;
-        this.price = price;
-        this.views = views;
-        this.images = images;
-        this.totalSold = totalSold;
+    public ProductInfoDTO(Product p) {
+        this.id = p.getId();
+        this.name = p.getName();
+        this.slug = p.getSlug();
+        this.price = p.getPrice();
+        this.views = p.getView();
+        this.images = p.getImages();
+        this.totalSold = p.getTotalSold();
     }
 }

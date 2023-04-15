@@ -15,15 +15,15 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
-//    @Override
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**") // Cho phép tất cả các đường dẫn
-//                .allowedOrigins("*")
-//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-//                .allowedHeaders("authorization", "content-type", "x-auth-token")
-//                .exposedHeaders("x-auth-token","X-Total-Count")
-//                .allowCredentials(false).maxAge(3600);
-//    }
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**") // Cho phép tất cả các đường dẫn
+                .allowedOrigins("*")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("authorization", "content-type", "x-auth-token")
+                .exposedHeaders("x-auth-token","X-Total-Count")
+                .allowCredentials(false).maxAge(3600);
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
