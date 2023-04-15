@@ -92,10 +92,6 @@ public class HomeController {
         List<ProductInfoDTO> relatedProducts = productService.getRelatedProducts(id);
         model.addAttribute("relatedProducts", relatedProducts);
 
-        //Lấy danh sách nhãn hiệu
-        List<Brand> brands = brandService.getListBrand();
-        model.addAttribute("brands",brands);
-
         // Lấy size có sẵn
         List<Integer> availableSizes = productService.getListAvailableSize(id);
         model.addAttribute("availableSizes", availableSizes);
@@ -104,12 +100,6 @@ public class HomeController {
         } else {
             model.addAttribute("canBuy", false);
         }
-
-        //Lấy danh sách size giầy
-        model.addAttribute("sizeVn", SIZE_VN);
-        model.addAttribute("sizeUs", SIZE_US);
-        model.addAttribute("sizeCm", SIZE_CM);
-
 
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
