@@ -44,15 +44,15 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
     //Lấy sản phẩm mới nhất
     @Query(value = "SELECT NEW com.example.doantotnghiep.model.dto.ProductInfoDTO(p) FROM Product p WHERE p.status = 1 ORDER BY p.createdAt DESC ")
-    List<ProductInfoDTO> getListNewProducts(int limit);
+    List<ProductInfoDTO> getListNewProducts();
 
     //Lấy sản phẩm được xem nhiều
     @Query(value = "SELECT NEW com.example.doantotnghiep.model.dto.ProductInfoDTO(p) FROM Product p WHERE p.status = 1 ORDER BY p.view DESC ")
-    List<ProductInfoDTO> getListViewProducts(int limit);
+    List<ProductInfoDTO> getListViewProducts();
 
     //Lấy sản phẩm liên quan
-    @Query(nativeQuery = true, name = "getRelatedProducts")
-    List<ProductInfoDTO> getRelatedProducts(String id, int limit);
+    @Query(value = "SELECT NEW com.example.doantotnghiep.model.dto.ProductInfoDTO(p) FROM Product p WHERE p.status = 1 AND p.id NOT IN(:id)")
+    List<ProductInfoDTO> getRelatedProducts(@Param("id") String id);
 
     //Lấy sản phẩm
     @Query(name = "getAllProduct", nativeQuery = true)

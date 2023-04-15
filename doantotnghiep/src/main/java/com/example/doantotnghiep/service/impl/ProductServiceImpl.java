@@ -177,14 +177,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductInfoDTO> getListNewProducts() {
-        List<ProductInfoDTO> productInfoDTOS = productRepository.getListNewProducts(LIMIT_PRODUCT_NEW);
+        List<ProductInfoDTO> productInfoDTOS = productRepository.getListNewProducts();
         return checkPublicPromotion(productInfoDTOS);
 
     }
 
     @Override
     public List<ProductInfoDTO> getListViewProducts() {
-        List<ProductInfoDTO> productInfoDTOS = productRepository.getListViewProducts(LIMIT_PRODUCT_VIEW);
+        List<ProductInfoDTO> productInfoDTOS = productRepository.getListViewProducts();
         return checkPublicPromotion(productInfoDTOS);
     }
 
@@ -234,7 +234,7 @@ public class ProductServiceImpl implements ProductService {
         if (product == null) {
             throw new NotFoundException("Sản phẩm không tồn tại");
         }
-        List<ProductInfoDTO> products = productRepository.getRelatedProducts(id, LIMIT_PRODUCT_RELATED);
+        List<ProductInfoDTO> products = productRepository.getRelatedProducts(id);
         return checkPublicPromotion(products);
     }
 
