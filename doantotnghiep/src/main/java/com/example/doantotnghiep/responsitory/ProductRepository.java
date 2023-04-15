@@ -35,22 +35,19 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     @Query(value = " SELECT NEW com.example.doantotnghiep.model.responeadmin.ProductsAdminResponse(a,b,d) FROM Product a INNER JOIN Brand b on a.brand.id = b.id INNER JOIN ProductCategory c on a.id = c.id INNER JOIN Category d on c.categoryId = d.id")
     List<ProductsAdminResponse> adminGetListProducts();
 
-    @Query(value = "SELECT NEW com.example.doantotnghiep.model.dto.ProductInfoDTO(p.id, p.name, p.slug, p.price ,p.images ->> '$[0]', p.total_sold) " +
-            "FROM product p " +
-            "WHERE p.status = 1 " +
-            "ORDER BY p.created_at DESC limit ?1",nativeQuery = true)
-    List<ProductInfoDTO> getListBestSellProducts1(int limit);
+    @Query(value = "SELECT NEW com.example.doantotnghiep.model.dto.ProductInfoDTO(p) FROM Product p WHERE p.status = 1 ORDER BY p.totalSold DESC ")
+    List<ProductInfoDTO> getListBestSellProducts();
 
-    //Lấy sản phẩm được bán nhiều
-    @Query(nativeQuery = true,name = "getListBestSellProducts")
-    List<ProductInfoDTO> getListBestSellProducts(int limit);
+//    //Lấy sản phẩm được bán nhiều
+//    @Query(nativeQuery = true,name = "getListBestSellProducts")
+//    List<ProductInfoDTO> getListBestSellProducts1(int limit);
 
     //Lấy sản phẩm mới nhất
-    @Query(nativeQuery = true,name = "getListNewProducts")
+    @Query(value = "SELECT NEW com.example.doantotnghiep.model.dto.ProductInfoDTO(p) FROM Product p WHERE p.status = 1 ORDER BY p.createdAt DESC ")
     List<ProductInfoDTO> getListNewProducts(int limit);
 
     //Lấy sản phẩm được xem nhiều
-    @Query(nativeQuery = true,name = "getListViewProducts")
+    @Query(value = "SELECT NEW com.example.doantotnghiep.model.dto.ProductInfoDTO(p) FROM Product p WHERE p.status = 1 ORDER BY p.view DESC ")
     List<ProductInfoDTO> getListViewProducts(int limit);
 
     //Lấy sản phẩm liên quan

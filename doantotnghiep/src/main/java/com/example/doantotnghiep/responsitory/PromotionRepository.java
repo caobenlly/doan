@@ -18,7 +18,7 @@ public interface PromotionRepository extends JpaRepository<Promotion,Long> {
             "AND p.name LIKE CONCAT('%',?2,'%') " +
             "AND p.is_public LIKE CONCAT('%',?3,'%') " +
             "AND p.is_active LIKE CONCAT('%',?4,'%')")
-    Page<Promotion> adminGetListPromotion(String code, String name, String publish, String active, Pageable pageable);
+        List<Promotion> adminGetListPromotion(String code, String name, String publish, String active);
 
     //Kiểm tra có khuyến mại đang chạy
     @Query(nativeQuery = true, value = "SELECT * FROM promotion p WHERE p.is_active = true AND p.is_public = true AND expired_at > now()")

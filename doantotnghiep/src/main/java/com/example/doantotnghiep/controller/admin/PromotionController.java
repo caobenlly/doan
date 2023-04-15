@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @CrossOrigin("*")
@@ -28,9 +29,9 @@ public class PromotionController {
                                         @RequestParam(defaultValue = "", required = false) String active) {
 
 
-        Page<Promotion> promotionPage = promotionService.adminGetListPromotion(code, name, publish, active, page);
-        model.addAttribute("promotionPage", promotionPage);
-        return ResponseEntity.ok(model);
+        List<Promotion> promotionPage = promotionService.adminGetListPromotion(code, name, publish, active, page);
+
+        return ResponseEntity.ok(promotionPage);
     }
 
     @GetMapping("/admin/promotions/create")

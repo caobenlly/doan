@@ -171,7 +171,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductInfoDTO> getListBestSellProducts() {
-        List<ProductInfoDTO> productInfoDTOS = productRepository.getListBestSellProducts(LIMIT_PRODUCT_SELL);
+        List<ProductInfoDTO> productInfoDTOS = productRepository.getListBestSellProducts();
         return checkPublicPromotion(productInfoDTOS);
     }
 
