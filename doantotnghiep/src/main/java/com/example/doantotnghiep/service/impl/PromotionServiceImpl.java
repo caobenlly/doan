@@ -27,7 +27,7 @@ public class PromotionServiceImpl implements PromotionService {
     private PromotionRepository promotionRepository;
 
     @Override
-    public List<Promotion> adminGetListPromotion(String code, String name, String publish, String active, int page) {
+    public List<Promotion> adminGetListPromotion(String code, String name, String publish, String active) {
 
         return promotionRepository.adminGetListPromotion(code, name, publish, active);
     }

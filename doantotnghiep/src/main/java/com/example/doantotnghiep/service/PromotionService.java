@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public interface PromotionService {
 
-    List<Promotion> adminGetListPromotion(String code, String name, String publish, String active, int page);
+    List<Promotion> adminGetListPromotion(String code, String name, String publish, String active);
 
     Promotion createPromotion(CreatePromotionRequest createPromotionRequest);
 

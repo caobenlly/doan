@@ -26,7 +26,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "FROM post p " +
             "WHERE p.title LIKE CONCAT('%',:title,'%') " +
             "AND p.status LIKE CONCAT('%',:status,'%') ",nativeQuery = true)
-    Page<Post> adminGetListPosts(String title, String status, Pageable pageable);
+    List<Post> adminGetListPosts(String title, String status);
 
     @Query(nativeQuery = true, value = "SELECT * FROM post p WHERE p.status = ?1 ORDER BY p.published_at DESC LIMIT ?2")
     List<Post> getLatesPosts(int status, int limit);

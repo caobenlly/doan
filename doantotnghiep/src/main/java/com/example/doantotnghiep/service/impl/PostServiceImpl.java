@@ -140,13 +140,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Page<Post> adminGetListPosts(String title, String status, Integer page) {
-        page--;
-        if (page < 0) {
-            page = 0;
-        }
-        Pageable pageable = PageRequest.of(page, LIMIT_POST, Sort.by("published_at").descending());
-        return postRepository.adminGetListPosts(title, status, pageable);
+    public List<Post> adminGetListPosts(String title, String status) {
+
+        return postRepository.adminGetListPosts(title, status);
     }
 
     @Override

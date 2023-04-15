@@ -29,7 +29,7 @@ public class PromotionController {
                                         @RequestParam(defaultValue = "", required = false) String active) {
 
 
-        List<Promotion> promotionPage = promotionService.adminGetListPromotion(code, name, publish, active, page);
+        List<Promotion> promotionPage = promotionService.adminGetListPromotion(code, name, publish, active);
 
         return ResponseEntity.ok(promotionPage);
     }

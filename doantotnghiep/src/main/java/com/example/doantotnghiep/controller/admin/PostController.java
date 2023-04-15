@@ -37,11 +37,11 @@ public class PostController {
             return new ResponseEntity<>("Lỗi",HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        Page<Post> result = postService.adminGetListPosts(title, status, page);
-        model.addAttribute("posts", result.getContent());
+        List<Post> result = postService.adminGetListPosts(title, status);
 
 
-        return ResponseEntity.ok(model);
+
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/admin/posts/create")
@@ -58,7 +58,7 @@ public class PostController {
     public ResponseEntity<Object> getListPosts(@RequestParam(defaultValue = "", required = false) String title,
                                                @RequestParam(defaultValue = "", required = false) String status,
                                                @RequestParam(defaultValue = "1", required = false) Integer page) {
-        Page<Post> posts = postService.adminGetListPosts(title, status, page);
+        List<Post> posts = postService.adminGetListPosts(title, status);
         return ResponseEntity.ok(posts);
     }
 
