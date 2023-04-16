@@ -99,7 +99,7 @@ public class CategoryServiceImpl implements CategoryService {
         //Check product in category
         long count = categoryRepository.checkProductInCategory(id);
         if (count > 0) {
-            throw new AppException(400,"Có sản phẩm thuộc danh mục không thể xóa!");
+            throw new BadRequestException("Có sản phẩm thuộc danh mục không thể xóa!");
         }
 
         try {
