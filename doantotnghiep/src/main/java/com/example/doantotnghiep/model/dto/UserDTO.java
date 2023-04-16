@@ -1,10 +1,8 @@
 package com.example.doantotnghiep.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,4 +18,5 @@ public class UserDTO {
     private String avatar;
     private String token;
     private List<String> roles;
+    private Date expiry_date;
 }

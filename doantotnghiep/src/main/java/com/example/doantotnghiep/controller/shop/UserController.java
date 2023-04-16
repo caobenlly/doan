@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,7 +76,7 @@ public class  UserController {
             ));
             //Gen token
             String token = jwtTokenUtil.generateToken((CustomUserDetails) authentication.getPrincipal());
-
+               List<String> respon = new ArrayList<>();
 //            //Add token to cookie to login
 //            Cookie cookie = new Cookie("JWT_TOKEN", token);
 //            cookie.setMaxAge(MAX_AGE_COOKIE);
@@ -92,6 +93,7 @@ public class  UserController {
             refreshToken.setToken(jwt);
             refreshToken.setExpiryDate(claims.getExpiration());
             refreshTokenRepository.save(refreshToken);
+            userDTO.setExpiry_date(claims.getExpiration());
           return ResponseEntity.ok(userDTO);
 
         } catch (Exception ex) {
