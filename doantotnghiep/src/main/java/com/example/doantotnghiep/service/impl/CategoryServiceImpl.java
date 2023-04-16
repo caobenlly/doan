@@ -1,6 +1,7 @@
 package com.example.doantotnghiep.service.impl;
 
 import com.example.doantotnghiep.entity.Category;
+import com.example.doantotnghiep.exception.AppException;
 import com.example.doantotnghiep.exception.BadRequestException;
 import com.example.doantotnghiep.exception.InternalServerException;
 import com.example.doantotnghiep.exception.NotFoundException;
@@ -98,7 +99,7 @@ public class CategoryServiceImpl implements CategoryService {
         //Check product in category
         long count = categoryRepository.checkProductInCategory(id);
         if (count > 0) {
-            throw new BadRequestException("Có sản phẩm thuộc danh mục không thể xóa!");
+            throw new AppException(400,"Có sản phẩm thuộc danh mục không thể xóa!");
         }
 
         try {
