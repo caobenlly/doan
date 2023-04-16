@@ -12,7 +12,7 @@ public class RegistrationUserToken implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	private int id;
+	private Long id;
 
 	@Column(name = "token", nullable = false, length = 36, unique = true)
 	private String token;
@@ -40,11 +40,11 @@ public class RegistrationUserToken implements Serializable {
 		return serialVersionUID;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

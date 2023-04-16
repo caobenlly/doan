@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface CommentService {
-    Comment createCommentPost(CreateCommentPostRequest createCommentPostRequest, int userId);
-    Comment createCommentProduct(CreateCommentProductRequest createCommentProductRequest, int userId);
+    Comment createCommentPost(CreateCommentPostRequest createCommentPostRequest, Long userId);
+    Comment createCommentProduct(CreateCommentProductRequest createCommentProductRequest, Long userId);
 }

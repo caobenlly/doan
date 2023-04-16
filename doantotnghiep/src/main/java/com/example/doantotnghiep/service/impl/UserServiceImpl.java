@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService {
         }
 
 
-        String resetPasswordToken = resetPasswordTokenRepository.findByUserId((int) user.getId());
+        String resetPasswordToken = resetPasswordTokenRepository.findByUserId(user.getId());
         if( resetPasswordToken!= null){
             // remove Reset Password
             ResetPasswordToken resetPasswordToken1 = resetPasswordTokenRepository.findByToken(resetPasswordToken);
@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService {
 
         //get token
 
-        String otp = resetPasswordTokenRepository.findByUserId((int) user.getId());
+        String otp = resetPasswordTokenRepository.findByUserId(user.getId());
         MainResponse response = new MainResponse();
         response.setToken(otp);
         response.setMessage("OTP đã được gửi vui lòng check email");
@@ -155,7 +155,7 @@ public class UserServiceImpl implements UserService {
         log.info("xác thực otp");
 
 
-        int otpauthen = resetPasswordTokenRepository.findByOtp((int) findUserByEmail(authentificationOtp.getEmail()).getId());
+        int otpauthen = resetPasswordTokenRepository.findByOtp( findUserByEmail(authentificationOtp.getEmail()).getId());
 
 
         String s = String.valueOf(otpauthen);
@@ -168,7 +168,7 @@ public class UserServiceImpl implements UserService {
         }
         User user = findUserByEmail(authentificationOtp.getEmail());
 
-        String token = resetPasswordTokenRepository.findByUserId((int) user.getId());
+        String token = resetPasswordTokenRepository.findByUserId(user.getId());
         MainResponse response = new MainResponse();
         response.setToken(token);
         response.setMessage("Xác thực thành công");

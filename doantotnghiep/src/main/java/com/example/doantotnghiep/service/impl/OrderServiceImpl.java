@@ -87,7 +87,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public Order createOrder(CreateOrderRequest createOrderRequest, int userId) {
+    public Order createOrder(CreateOrderRequest createOrderRequest, Long userId) {
 
         //Kiểm tra sản phẩm có tồn tại
         Optional<Product> product = productRepository.findById(createOrderRequest.getProductId());
@@ -128,7 +128,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateDetailOrder(UpdateDetailOrder updateDetailOrder, long id, int userId) {
+    public void updateDetailOrder(UpdateDetailOrder updateDetailOrder, long id, Long userId) {
         //Kiểm trả có đơn hàng
         Optional<Order> rs = orderRepository.findById(id);
         if (rs == null) {
@@ -200,7 +200,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void updateStatusOrder(UpdateStatusOrderRequest updateStatusOrderRequest, long orderId, int userId) {
+    public void updateStatusOrder(UpdateStatusOrderRequest updateStatusOrderRequest, long orderId,Long userId) {
         Optional<Order> rs = orderRepository.findById(orderId);
         if (rs == null) {
             throw new NotFoundException("Đơn hàng không tồn tại");

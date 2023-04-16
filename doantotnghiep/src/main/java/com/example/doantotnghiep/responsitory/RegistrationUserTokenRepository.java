@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 
-public interface RegistrationUserTokenRepository extends JpaRepository<RegistrationUserToken, Integer> {
+public interface RegistrationUserTokenRepository extends JpaRepository<RegistrationUserToken, Long> {
 
 	public RegistrationUserToken findByToken(String token);
 
@@ -21,13 +21,13 @@ public interface RegistrationUserTokenRepository extends JpaRepository<Registrat
 //	@Query("	SELECT 	token	"
 //			+ "	FROM 	RegistrationUserToken "
 //			+ " WHERE 	user.id = :userId")
-	public RegistrationUserToken findFirstByUserId(@Param("userId") int userId);
+	public RegistrationUserToken findFirstByUserId(@Param("userId") long userId);
 
 	@Transactional
 	@Modifying
 	@Query("	DELETE 							"
 			+ "	FROM 	RegistrationUserToken 	"
 			+ " WHERE 	user.id = :userId")
-	public void deleteByUserId(@Param("userId") int userId);
+	public void deleteByUserId(@Param("userId") long userId);
 
 }
