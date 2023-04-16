@@ -21,7 +21,7 @@ public class CommentServiceImpl implements CommentService {
     private CommentRepository commentRepository;
 
     @Override
-    public Comment createCommentPost(CreateCommentPostRequest createCommentPostRequest, int userId) {
+    public Comment createCommentPost(CreateCommentPostRequest createCommentPostRequest,Long userId) {
         Comment comment = new Comment();
         Post post = new Post();
         post.setId(createCommentPostRequest.getPostId());
@@ -40,7 +40,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment createCommentProduct(CreateCommentProductRequest createCommentProductRequest, int userId) {
+    public Comment createCommentProduct(CreateCommentProductRequest createCommentProductRequest, Long userId) {
         Comment comment = new Comment();
         comment.setContent(createCommentProductRequest.getContent());
         comment.setCreatedAt(new Timestamp(System.currentTimeMillis()));

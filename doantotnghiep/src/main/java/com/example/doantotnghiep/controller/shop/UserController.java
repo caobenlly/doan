@@ -1,15 +1,19 @@
 package com.example.doantotnghiep.controller.shop;
 
 
+import com.example.doantotnghiep.entity.RefreshToken;
 import com.example.doantotnghiep.entity.User;
 import com.example.doantotnghiep.exception.BadRequestException;
 import com.example.doantotnghiep.model.dto.BaseRespone;
 import com.example.doantotnghiep.model.dto.UserDTO;
 import com.example.doantotnghiep.model.mapper.UserMapper;
 import com.example.doantotnghiep.model.request.*;
+import com.example.doantotnghiep.responsitory.RefreshTokenRepository;
 import com.example.doantotnghiep.security.CustomUserDetails;
 import com.example.doantotnghiep.security.JwtTokenUtil;
 import com.example.doantotnghiep.service.UserService;
+import com.example.doantotnghiep.service.impl.RefreshTokenService;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,13 +30,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.doantotnghiep.config.Contant.MAX_AGE_COOKIE;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("")
 @Validated
-public class UserController {
+public class  UserController {
 
     private static final String PREFIX_TOKEN = "Bearer";
     private static final String AUTHORIZATION = "Authorization";
@@ -43,6 +48,10 @@ public class UserController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private RefreshTokenRepository refreshTokenRepository;
+    @Autowired
+    private RefreshTokenService refreshTokenService;
 
     @GetMapping("/users")
     public ResponseEntity<Object> getListUsers() {
@@ -74,10 +83,15 @@ public class UserController {
 //            response.addCookie(cookie);
 
             //add token to header to login
-            response.addHeader(AUTHORIZATION, PREFIX_TOKEN + " " + token);
+//            response.addHeader(AUTHORIZATION, PREFIX_TOKEN + " " + token);
             String jwt = PREFIX_TOKEN + " " + token;
             UserDTO userDTO = UserMapper.toUserDTO(((CustomUserDetails) authentication.getPrincipal()).getUser());
             userDTO.setToken(jwt);
+            Claims claims = jwtTokenUtil.getClaimsFromToken(token);
+            RefreshToken refreshToken = new RefreshToken();
+            refreshToken.setToken(jwt);
+            refreshToken.setExpiryDate(claims.getExpiration());
+            refreshTokenRepository.save(refreshToken);
           return ResponseEntity.ok(userDTO);
 
         } catch (Exception ex) {
@@ -160,4 +174,19 @@ public class UserController {
     }
 
 
+    @PostMapping("/refreshtoken")
+    public ResponseEntity<?> refreshtoken(@Valid @RequestBody TokenRefreshRequest request) {
+        String requestRefreshToken = request.getToken();
+
+        Optional<RefreshToken> optionaltoken= refreshTokenService.findByToken(requestRefreshToken);
+
+         //kiểm tra còn h không
+        if (optionaltoken.isPresent()){
+            refreshTokenService.verifyExpiration(optionaltoken.get());
+        }
+
+        RefreshToken refreshTokenRespones = refreshTokenService.createRefreshToken(request.getId());
+
+        return ResponseEntity.ok(refreshTokenRespones);
+    }
 }

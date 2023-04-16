@@ -44,7 +44,7 @@ public class EmailService implements IEmailService {
     public void sendRegistrationUserConfirm(String email) {
 
         User user = userService.findUserByEmail(email);
-        RegistrationUserToken tokenEntity= registrationUserTokenRepository.findFirstByUserId((int) user.getId());
+        RegistrationUserToken tokenEntity= registrationUserTokenRepository.findFirstByUserId(user.getId());
         String token = tokenEntity.getToken();
         String confirmationUrl = "http://192.168.1.34:8080/#/email-verify";
         String Name = user.getEmail();
@@ -76,7 +76,7 @@ public class EmailService implements IEmailService {
     public void sendResetPassword(String email) {
 
         User user = userService.findUserByEmail(email);
-        int tokendb = resetPasswordTokenRepository.findByOtp((int) user.getId());
+        int tokendb = resetPasswordTokenRepository.findByOtp( user.getId());
 //        int token = tokendb.getToken();
         String Name = user.getEmail();
 //        String confirmationUrl = "http://localhost:3000/auth/new-password/" + token;
