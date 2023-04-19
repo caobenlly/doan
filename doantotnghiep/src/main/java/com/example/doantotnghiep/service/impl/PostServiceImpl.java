@@ -151,13 +151,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Page<Post> getListPost(int page) {
-        page--;
-        if (page < 0) {
-            page = 0;
-        }
-        Pageable pageable = PageRequest.of(page, LIMIT_POST_SHOP, Sort.by("publishedAt").descending());
-        return postRepository.findAllByStatus(PUBLIC_POST, pageable);
+    public List<Post> getListPost(int page) {
+        return postRepository.findAllByStatus(PUBLIC_POST);
     }
 
     @Override

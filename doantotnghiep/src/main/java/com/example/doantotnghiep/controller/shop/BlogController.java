@@ -25,11 +25,9 @@ public class BlogController {
     public ResponseEntity<Object> getPostPages(Model model,
                                @RequestParam(defaultValue = "1", required = false) Integer page) {
 
-        Page<Post> posts = postService.getListPost(page);
-        model.addAttribute("posts", posts.getContent());
-        model.addAttribute("totalPages", posts.getTotalPages());
-        model.addAttribute("currentPage", posts.getPageable().getPageNumber() + 1);
-        return ResponseEntity.ok(model);
+        List<Post> posts = postService.getListPost(page);
+
+        return ResponseEntity.ok(posts);
     }
 
     @GetMapping("/tin-tuc/{slug}/{id}")

@@ -25,7 +25,7 @@ public interface PostService {
 
     List<Post> getLatesPost();
 
-    Page<Post> getListPost(int page);
+    List<Post> getListPost(int page);
 
     List<Post> getLatestPostsNotId(long id);
 
