@@ -3,6 +3,7 @@ package com.example.doantotnghiep.controller.admin;
 import com.example.doantotnghiep.entity.*;
 import com.example.doantotnghiep.exception.AppException;
 import com.example.doantotnghiep.exception.ErrorResponseBase;
+import com.example.doantotnghiep.model.request.CreatePrcImg;
 import com.example.doantotnghiep.model.request.CreateProductRequest;
 import com.example.doantotnghiep.model.request.CreateSizeCountRequest;
 import com.example.doantotnghiep.model.request.UpdateFeedBackRequest;
@@ -12,6 +13,7 @@ import com.example.doantotnghiep.service.BrandService;
 import com.example.doantotnghiep.service.CategoryService;
 import com.example.doantotnghiep.service.ImageService;
 import com.example.doantotnghiep.service.ProductService;
+import com.ibm.icu.impl.locale.XCldrStub;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
@@ -24,14 +26,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.*;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.example.doantotnghiep.config.Contant.SIZE_VN;
 
@@ -59,6 +65,8 @@ public class ProductController {
 
     @Autowired
     private ImageService imageService;
+    @Autowired
+    private  ImageController imageController;
 
     @GetMapping("/admin/products")
     public ResponseEntity<Object> homePages(Model model,
@@ -145,10 +153,19 @@ public class ProductController {
         return ResponseEntity.ok(rs);
     }
 
-    @PostMapping("/api/admin/products")
-    public ResponseEntity<Object> createProduct(@Valid @RequestBody CreateProductRequest createProductRequest) {
-        Product product = productService.createProduct(createProductRequest);
-        return ResponseEntity.ok(product);
+    @RequestMapping(value = "/api/admin/products",method = RequestMethod.POST, consumes = { "multipart/form-data" })
+    public ResponseEntity<Object> createProduct(@Valid @ModelAttribute CreatePrcImg createProductRequest) {
+
+        ArrayList<MultipartFile> images = createProductRequest.getImages();
+        CreateProductRequest createProductRequest1 = new CreateProductRequest(createProductRequest);
+        ArrayList<String> a = new ArrayList<>();
+       for (MultipartFile it : images) {
+           a.add(imageController.uploadFile1(it));
+       }
+        createProductRequest1.setImages(a);
+        Product product = productService.createProduct(createProductRequest1);
+      return ResponseEntity.ok(product);
+
     }
 
     @PutMapping("/api/admin/products/{id}")

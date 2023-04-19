@@ -1,15 +1,13 @@
 package com.example.doantotnghiep.model.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
 import java.util.ArrayList;
 
-@AllArgsConstructor
+
 @NoArgsConstructor
 @Setter
 @Getter
@@ -47,5 +45,19 @@ public class CreateProductRequest {
 
     @JsonProperty("feed_back_images")
     private ArrayList<String> feedBackImages;
+
+    public CreateProductRequest(CreatePrcImg createPrcImg) {
+        this.id = createPrcImg.getId();
+        this.name = createPrcImg.getName();
+        this.description = createPrcImg.getDescription();
+        this.brandId = createPrcImg.getBrandId();
+        this.categoryIds = createPrcImg.getCategoryIds();
+        this.price = createPrcImg.getPrice();
+        this.salePrice = createPrcImg.getSalePrice();
+        this.images = images;
+        this.feedBackImages = feedBackImages;
+        this.status = createPrcImg.getStatus();
+    }
+
     private int status;
 }
