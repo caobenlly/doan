@@ -32,7 +32,7 @@ import java.util.List;
 
 import static com.example.doantotnghiep.config.Contant.*;
 
-@Controller
+@RestController
 @CrossOrigin("*")
 public class OrderController {
 

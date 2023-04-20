@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 import static com.example.doantotnghiep.config.Contant.SIZE_VN;
 
 @Slf4j
-@Controller
+@RestController
 @CrossOrigin("*")
 public class ProductController {
 

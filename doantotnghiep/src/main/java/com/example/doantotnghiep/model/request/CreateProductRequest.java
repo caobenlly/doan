@@ -22,11 +22,9 @@ public class CreateProductRequest {
     private String description;
 
     @NotNull(message = "Nhãn hiệu trống!")
-    @JsonProperty("brand_id")
     private Long brandId;
 
     @NotNull(message = "Danh mục trống!")
-    @JsonProperty("category_ids")
     private ArrayList<Integer> categoryIds;
 
     @Min(1000)
