@@ -20,6 +20,7 @@ import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -65,7 +66,9 @@ public class ImageController {
                 bos.close();
 
                 imageService.saveImage(image);
-                return ResponseEntity.ok(link);
+                List<String> a = new ArrayList<>();
+                a.add(link);
+                return ResponseEntity.ok(a);
 
             } catch (Exception e) {
                 throw new InternalServerException("Có lỗi trong quá trình upload file!");
