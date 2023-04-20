@@ -158,9 +158,11 @@ public class ProductController {
 
         ArrayList<MultipartFile> images = createProductRequest.getImages();
         CreateProductRequest createProductRequest1 = new CreateProductRequest(createProductRequest);
+
         ArrayList<String> a = new ArrayList<>();
        for (MultipartFile it : images) {
-           a.add(imageController.uploadFile1(it));
+           String duongdan = imageController.uploadFile1(it);
+          a.add(imageController.downloadFile1(duongdan).toString());
        }
         createProductRequest1.setImages(a);
         Product product = productService.createProduct(createProductRequest1);

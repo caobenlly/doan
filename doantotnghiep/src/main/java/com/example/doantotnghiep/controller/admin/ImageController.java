@@ -144,4 +144,23 @@ public class ImageController {
         }
         throw new BadRequestException("File không hợp lệ!");
     }
+
+    public UrlResource downloadFile1(@PathVariable String filename) {
+        File file = new File(UPLOAD_DIR + "/" + filename);
+        if (!file.exists()) {
+            throw new NotFoundException("File không tồn tại!");
+        }
+
+        UrlResource resource;
+        try {
+            resource = new UrlResource(file.toURI());
+        } catch (MalformedURLException ex) {
+            throw new NotFoundException("File không tồn tại!");
+        }
+
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
+//                .body(resource);
+        return  resource;
+    }
 }
