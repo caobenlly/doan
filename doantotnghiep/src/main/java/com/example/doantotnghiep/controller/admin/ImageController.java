@@ -162,7 +162,7 @@ public class ImageController {
 
     public UrlResource downloadFile1(String filename) {
         File file = new File(UPLOAD_DIR + "/" + filename);
-        if (file.exists()) {
+        if (!file.exists()) {
             throw new NotFoundException("File không tồn tại!");
         }
 
