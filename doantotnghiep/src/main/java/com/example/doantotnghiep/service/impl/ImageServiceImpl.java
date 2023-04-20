@@ -95,7 +95,7 @@ public class ImageServiceImpl implements ImageService {
                 image.setName(file.getName());
                 image.setSize(file.getSize());
                 image.setType(extension);
-                String link = "/media/static/" + image.getId() + "." + extension;
+                String link =  image.getId() + "." + extension;
                 image.setLink(link);
                 image.setCreatedAt(new Timestamp(System.currentTimeMillis()));
                 image.setCreatedBy(((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser());
