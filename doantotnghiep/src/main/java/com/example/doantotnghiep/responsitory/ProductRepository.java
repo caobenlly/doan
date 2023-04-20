@@ -120,5 +120,5 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     int countProductByKeyword(@Param("keyword") String keyword);
 
     @Query(name = "getProductOrders",nativeQuery = true)
-    List<ChartDTO> getProductOrders(Pageable pageable, Integer moth, Integer year);
+    List<ChartDTO> getProductOrders(Integer moth, Integer year);
 }

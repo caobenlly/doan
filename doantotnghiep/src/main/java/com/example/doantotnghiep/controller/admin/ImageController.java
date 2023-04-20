@@ -31,54 +31,67 @@ public class ImageController {
     @Autowired
     private ImageService imageService;
 
+//    @PostMapping("/api/upload/files")
+//    public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) {
+//        //Tạo thư mục chứa ảnh nếu không tồn tại
+//        File uploadDir = new File(UPLOAD_DIR);
+//        if (!uploadDir.exists()) {
+//            uploadDir.mkdirs();
+//        }
+//
+//        //Lấy tên file và đuôi mở rộng của file
+//        String originalFilename = file.getOriginalFilename();
+//        String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+//        if (originalFilename.length() > 0) {
+//
+//            //Kiểm tra xem file có đúng định dạng không
+//            if (!extension.equals("png") && !extension.equals("jpg") && !extension.equals("gif") && !extension.equals("svg") && !extension.equals("jpeg")) {
+//                throw new BadRequestException("Không hỗ trợ định dạng file này!");
+//            }
+//            try {
+//                Image image = new Image();
+//                image.setId(UUID.randomUUID().toString());
+//                image.setName(file.getName());
+//                image.setSize(file.getSize());
+//                image.setType(extension);
+//                String link = "/media/static/" + image.getId() + "." + extension;
+//                image.setLink(link);
+//                image.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+//                image.setCreatedBy(((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser());
+//
+//                //Tạo file
+//                File serveFile = new File(UPLOAD_DIR + "/" + image.getId() + "." + extension);
+//                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(serveFile));
+//                bos.write(file.getBytes());
+//                bos.close();
+//
+//                imageService.saveImage(image);
+//                List<String> a = new ArrayList<>();
+//                UrlResource url = downloadFile1(link);
+//                a.add(link);
+//
+//                return ResponseEntity.ok(a);
+//
+//            } catch (Exception e) {
+//                throw new InternalServerException("Có lỗi trong quá trình upload file!");
+//            }
+//        }
+//        throw new BadRequestException("File không hợp lệ!");
+//    }
+
     @PostMapping("/api/upload/files")
     public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) {
-        //Tạo thư mục chứa ảnh nếu không tồn tại
-        File uploadDir = new File(UPLOAD_DIR);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdirs();
-        }
 
-        //Lấy tên file và đuôi mở rộng của file
-        String originalFilename = file.getOriginalFilename();
-        String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
-        if (originalFilename.length() > 0) {
-
-            //Kiểm tra xem file có đúng định dạng không
-            if (!extension.equals("png") && !extension.equals("jpg") && !extension.equals("gif") && !extension.equals("svg") && !extension.equals("jpeg")) {
-                throw new BadRequestException("Không hỗ trợ định dạng file này!");
-            }
-            try {
-                Image image = new Image();
-                image.setId(UUID.randomUUID().toString());
-                image.setName(file.getName());
-                image.setSize(file.getSize());
-                image.setType(extension);
-                String link = "/media/static/" + image.getId() + "." + extension;
-                image.setLink(link);
-                image.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-                image.setCreatedBy(((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser());
-
-                //Tạo file
-                File serveFile = new File(UPLOAD_DIR + "/" + image.getId() + "." + extension);
-                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(serveFile));
-                bos.write(file.getBytes());
-                bos.close();
-
-                imageService.saveImage(image);
-                List<String> a = new ArrayList<>();
-                UrlResource url = downloadFile1(link);
-                a.add(url.toString());
-
-                return ResponseEntity.ok(a);
+        try {
+                String a = imageService.uploadFile1(file);
+                String b = downloadFile1(a).toString();
+                return ResponseEntity.ok(b);
 
             } catch (Exception e) {
                 throw new InternalServerException("Có lỗi trong quá trình upload file!");
             }
-        }
-        throw new BadRequestException("File không hợp lệ!");
-    }
 
+    }
     @GetMapping("/media/static/{filename:.+}")
     public ResponseEntity<Object> downloadFile(@PathVariable String filename) {
         File file = new File(UPLOAD_DIR + "/" + filename);
@@ -147,9 +160,9 @@ public class ImageController {
         throw new BadRequestException("File không hợp lệ!");
     }
 
-    public UrlResource downloadFile1(@PathVariable String filename) {
+    public UrlResource downloadFile1(String filename) {
         File file = new File(UPLOAD_DIR + "/" + filename);
-        if (!file.exists()) {
+        if (file.exists()) {
             throw new NotFoundException("File không tồn tại!");
         }
 

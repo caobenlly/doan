@@ -119,7 +119,7 @@ public class DashboardController {
     public ResponseEntity<Object> getProductOrder(){
         Pageable pageable = PageRequest.of(0,10);
         Date date = new Date();
-        List<ChartDTO> chartDTOS = productRepository.getProductOrders(pageable, date.getMonth() +1, date.getYear() + 1900);
+        List<ChartDTO> chartDTOS = productRepository.getProductOrders( date.getMonth() +1, date.getYear() + 1900);
         return ResponseEntity.ok(chartDTOS);
     }
 }
