@@ -67,7 +67,9 @@ public class ImageController {
 
                 imageService.saveImage(image);
                 List<String> a = new ArrayList<>();
-                a.add(link);
+                UrlResource url = downloadFile1(link);
+                a.add(url.toString());
+
                 return ResponseEntity.ok(a);
 
             } catch (Exception e) {

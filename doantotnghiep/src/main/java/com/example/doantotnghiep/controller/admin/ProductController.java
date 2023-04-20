@@ -153,21 +153,10 @@ public class ProductController {
         return ResponseEntity.ok(rs);
     }
 
-    @RequestMapping(value = "/api/admin/products",method = RequestMethod.POST, consumes = { "multipart/form-data" })
-    public ResponseEntity<Object> createProduct(@Valid @ModelAttribute CreatePrcImg createProductRequest) {
-
-        ArrayList<MultipartFile> images = createProductRequest.getImages();
-        CreateProductRequest createProductRequest1 = new CreateProductRequest(createProductRequest);
-
-        ArrayList<String> a = new ArrayList<>();
-       for (MultipartFile it : images) {
-           String duongdan = imageController.uploadFile1(it);
-          a.add(imageController.downloadFile1(duongdan).toString());
-       }
-        createProductRequest1.setImages(a);
-        Product product = productService.createProduct(createProductRequest1);
-      return ResponseEntity.ok(product);
-
+    @PostMapping("/api/admin/products")
+    public ResponseEntity<Object> createProduct(@Valid @RequestBody CreateProductRequest createProductRequest) {
+        Product product = productService.createProduct(createProductRequest);
+        return ResponseEntity.ok(product);
     }
 
     @PutMapping("/api/admin/products/{id}")
