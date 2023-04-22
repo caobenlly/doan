@@ -1,4 +1,4 @@
-package com.example.doantotnghiep.exception;
+package com.example.doantotnghiep.entity.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -121,4 +121,8 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
     @Query(name = "getProductOrders",nativeQuery = true)
     List<ChartDTO> getProductOrders(Integer moth, Integer year);
+
+    //Lấy thông tin doanh số
+    @Query(value = "SELECT DATE_FORMAT(b.created_at, '%Y-%m') AS thang, SUM(b.sale_price) AS tong_doanh_so FROM product b GROUP BY thang",nativeQuery = true)
+    List<ChartDTO> getDoanhSo();
 }

@@ -3,7 +3,7 @@ package com.example.doantotnghiep.controller.shop;
 
 import com.example.doantotnghiep.entity.RefreshToken;
 import com.example.doantotnghiep.entity.User;
-import com.example.doantotnghiep.exception.BadRequestException;
+import com.example.doantotnghiep.entity.exception.BadRequestException;
 import com.example.doantotnghiep.model.dto.BaseRespone;
 import com.example.doantotnghiep.model.dto.UserDTO;
 import com.example.doantotnghiep.model.mapper.UserMapper;

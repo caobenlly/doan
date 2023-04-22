@@ -5,9 +5,9 @@ import com.example.doantotnghiep.entity.MainResponse;
 import com.example.doantotnghiep.entity.ResetPasswordToken;
 import com.example.doantotnghiep.entity.User;
 import com.example.doantotnghiep.event.OnResetPasswordViaEmailEvent;
-import com.example.doantotnghiep.exception.AppException;
-import com.example.doantotnghiep.exception.BadRequestException;
-import com.example.doantotnghiep.exception.ErrorResponseBase;
+import com.example.doantotnghiep.entity.exception.AppException;
+import com.example.doantotnghiep.entity.exception.BadRequestException;
+import com.example.doantotnghiep.entity.exception.ErrorResponseBase;
 import com.example.doantotnghiep.model.dto.UserDTO;
 import com.example.doantotnghiep.model.mapper.UserMapper;
 import com.example.doantotnghiep.model.request.*;
@@ -17,10 +17,6 @@ import com.example.doantotnghiep.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,8 +24,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import static com.example.doantotnghiep.config.Contant.LIMIT_USER;
 
 @Service
 @Log4j2

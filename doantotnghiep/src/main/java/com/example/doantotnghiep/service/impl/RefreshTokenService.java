@@ -3,33 +3,20 @@ package com.example.doantotnghiep.service.impl;
 
 import com.example.doantotnghiep.entity.RefreshToken;
 import com.example.doantotnghiep.entity.User;
-import com.example.doantotnghiep.exception.AppException;
-import com.example.doantotnghiep.exception.BadRequestException;
-import com.example.doantotnghiep.model.dto.UserDTO;
-import com.example.doantotnghiep.model.mapper.UserMapper;
+import com.example.doantotnghiep.entity.exception.BadRequestException;
 import com.example.doantotnghiep.responsitory.RefreshTokenRepository;
 import com.example.doantotnghiep.responsitory.UserRepository;
 import com.example.doantotnghiep.security.CustomUserDetails;
 import com.example.doantotnghiep.security.JwtTokenUtil;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.apache.catalina.Authenticator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @Service

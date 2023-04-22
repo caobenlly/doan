@@ -80,6 +80,6 @@ public class Post {
     private Timestamp publishedAt;
     @Column(name = "status",columnDefinition = "int default 0")
     private int status;
-    @OneToMany(mappedBy = "post")
-    private List<Comment> comments;
+//    @OneToMany(mappedBy = "post")
+//    private List<Comment> comments;
 }
