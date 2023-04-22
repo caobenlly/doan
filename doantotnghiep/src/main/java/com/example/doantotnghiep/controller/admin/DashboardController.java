@@ -161,7 +161,7 @@ public class DashboardController {
     public ResponseEntity<Object> getProductOrder(){
 
 
-            String sql = "SELECT DATE_FORMAT(b.created_at, '%Y-%m') AS thang, SUM(b.sale_price) AS tong_doanh_so FROM product b GROUP BY thang";
+            String sql = "SELECT DATE_FORMAT(b.created_at, '%m') AS thang, SUM(b.sale_price) AS tong_doanh_so FROM product b GROUP BY thang";
             Query query = entityManager.createNativeQuery(sql);
         return ResponseEntity.ok(query.getResultList());
     }
