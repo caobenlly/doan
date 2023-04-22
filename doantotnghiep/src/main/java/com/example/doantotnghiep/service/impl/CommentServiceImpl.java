@@ -4,7 +4,7 @@ import com.example.doantotnghiep.entity.Comment;
 import com.example.doantotnghiep.entity.Post;
 import com.example.doantotnghiep.entity.Product;
 import com.example.doantotnghiep.entity.User;
-import com.example.doantotnghiep.exception.InternalServerException;
+import com.example.doantotnghiep.entity.exception.InternalServerException;
 import com.example.doantotnghiep.model.request.CreateCommentPostRequest;
 import com.example.doantotnghiep.model.request.CreateCommentProductRequest;
 import com.example.doantotnghiep.responsitory.CommentRepository;

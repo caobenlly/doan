@@ -1,9 +1,9 @@
 package com.example.doantotnghiep.controller.admin;
 
 import com.example.doantotnghiep.entity.Image;
-import com.example.doantotnghiep.exception.BadRequestException;
-import com.example.doantotnghiep.exception.InternalServerException;
-import com.example.doantotnghiep.exception.NotFoundException;
+import com.example.doantotnghiep.entity.exception.BadRequestException;
+import com.example.doantotnghiep.entity.exception.InternalServerException;
+import com.example.doantotnghiep.entity.exception.NotFoundException;
 import com.example.doantotnghiep.security.CustomUserDetails;
 import com.example.doantotnghiep.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @RestController

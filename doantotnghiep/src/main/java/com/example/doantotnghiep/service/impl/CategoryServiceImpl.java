@@ -1,26 +1,19 @@
 package com.example.doantotnghiep.service.impl;
 
 import com.example.doantotnghiep.entity.Category;
-import com.example.doantotnghiep.exception.AppException;
-import com.example.doantotnghiep.exception.BadRequestException;
-import com.example.doantotnghiep.exception.InternalServerException;
-import com.example.doantotnghiep.exception.NotFoundException;
+import com.example.doantotnghiep.entity.exception.BadRequestException;
+import com.example.doantotnghiep.entity.exception.InternalServerException;
+import com.example.doantotnghiep.entity.exception.NotFoundException;
 import com.example.doantotnghiep.model.mapper.CategoryMapper;
 import com.example.doantotnghiep.model.request.CreateCategoryRequest;
 import com.example.doantotnghiep.responsitory.CategoryRepository;
 import com.example.doantotnghiep.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
-
-import static com.example.doantotnghiep.config.Contant.LIMIT_CATEGORY;
 
 @Component
 public class CategoryServiceImpl implements CategoryService {

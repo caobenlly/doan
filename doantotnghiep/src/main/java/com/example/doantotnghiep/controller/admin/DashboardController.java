@@ -1,8 +1,12 @@
 package com.example.doantotnghiep.controller.admin;
 
+import com.example.doantotnghiep.entity.Brand;
+import com.example.doantotnghiep.entity.Category;
+import com.example.doantotnghiep.entity.Product;
 import com.example.doantotnghiep.model.dto.ChartDTO;
 import com.example.doantotnghiep.model.dto.StatisticDTO;
 import com.example.doantotnghiep.model.request.FilterDayByDay;
+import com.example.doantotnghiep.model.responeadmin.ProductsAdminResponse;
 import com.example.doantotnghiep.responsitory.*;
 import com.example.doantotnghiep.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +17,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin("*")
 public class DashboardController {
-
+    @PersistenceContext
+    private EntityManager entityManager;
     @Autowired
     private PostService postService;
 
@@ -110,21 +121,48 @@ public class DashboardController {
 
     @GetMapping("/api/admin/product-order-categories")
     public ResponseEntity<Object> getListProductOrderCategories(){
-        List<ChartDTO> chartDTOS = categoryRepository.getListProductOrderCategories();
-        return ResponseEntity.ok(chartDTOS);
+        HashMap<String, Long> hashMap1 = new HashMap<String, Long>();
+        List<ProductsAdminResponse> adminResponses = productRepository.adminGetListProducts();
+        List<Category> categories = categoryRepository.findAll();
+        long dem = 0;
+        for(Category category : categories){
+            for (ProductsAdminResponse tr : adminResponses){
+                if(tr.getDanhMuc().equals(category.getName())){
+                    dem += tr.getDaBan();
+                }
+            }
+            hashMap1.put(category.getName(), dem);
+            dem =0;
+        }
+
+        return ResponseEntity.ok(hashMap1);
     }
 
     @GetMapping("/api/admin/product-order-brands")
     public ResponseEntity<Object> getProductOrderBrands(){
-        List<ChartDTO> chartDTOS = brandRepository.getProductOrderBrands();
-        return ResponseEntity.ok(chartDTOS);
+        HashMap<String, Long> hashMap1 = new HashMap<String, Long>();
+        List<Product> product = productRepository.findAll();
+        List<Brand> brands = brandRepository.findAll();
+        long dem = 0;
+        for(Brand brand : brands){
+            for (Product tr : product){
+                if(tr.getBrand().getId().equals(brand.getId())){
+                   dem += tr.getTotalSold();
+                }
+            }
+            hashMap1.put(brand.getName(), dem);
+            dem =0;
+        }
+
+        return ResponseEntity.ok(hashMap1);
     }
 
     @GetMapping("/api/admin/product-order")
     public ResponseEntity<Object> getProductOrder(){
-        Pageable pageable = PageRequest.of(0,10);
-        Date date = new Date();
-        List<ChartDTO> chartDTOS = productRepository.getProductOrders( date.getMonth() +1, date.getYear() + 1900);
-        return ResponseEntity.ok(chartDTOS);
+
+
+            String sql = "SELECT DATE_FORMAT(b.created_at, '%Y-%m') AS thang, SUM(b.sale_price) AS tong_doanh_so FROM product b GROUP BY thang";
+            Query query = entityManager.createNativeQuery(sql);
+        return ResponseEntity.ok(query.getResultList());
     }
 }

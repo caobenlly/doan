@@ -1,7 +1,9 @@
 package com.example.doantotnghiep.service.impl;
 
 import com.example.doantotnghiep.entity.*;
-import com.example.doantotnghiep.exception.*;
+import com.example.doantotnghiep.entity.exception.BadRequestException;
+import com.example.doantotnghiep.entity.exception.InternalServerException;
+import com.example.doantotnghiep.entity.exception.NotFoundException;
 import com.example.doantotnghiep.model.dto.DetailProductInfoDTO;
 import com.example.doantotnghiep.model.dto.PageableDTO;
 import com.example.doantotnghiep.model.dto.ProductInfoDTO;
@@ -22,11 +24,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static com.example.doantotnghiep.config.Contant.*;
 

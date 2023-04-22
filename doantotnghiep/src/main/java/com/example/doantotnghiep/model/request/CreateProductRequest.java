@@ -38,10 +38,9 @@ public class CreateProductRequest {
     private Long salePrice;
 
     @NotNull(message = "Danh sách ảnh trống!")
-    @JsonProperty("product_images")
     private ArrayList<String> images;
 
-    @JsonProperty("feed_back_images")
+
     private ArrayList<String> feedBackImages;
 
     private int status;

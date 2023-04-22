@@ -1,9 +1,6 @@
 package com.example.doantotnghiep.controller.admin;
 
 import com.example.doantotnghiep.entity.*;
-import com.example.doantotnghiep.exception.AppException;
-import com.example.doantotnghiep.exception.ErrorResponseBase;
-import com.example.doantotnghiep.model.request.CreatePrcImg;
 import com.example.doantotnghiep.model.request.CreateProductRequest;
 import com.example.doantotnghiep.model.request.CreateSizeCountRequest;
 import com.example.doantotnghiep.model.request.UpdateFeedBackRequest;
@@ -13,31 +10,23 @@ import com.example.doantotnghiep.service.BrandService;
 import com.example.doantotnghiep.service.CategoryService;
 import com.example.doantotnghiep.service.ImageService;
 import com.example.doantotnghiep.service.ProductService;
-import com.ibm.icu.impl.locale.XCldrStub;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.*;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static com.example.doantotnghiep.config.Contant.SIZE_VN;
 

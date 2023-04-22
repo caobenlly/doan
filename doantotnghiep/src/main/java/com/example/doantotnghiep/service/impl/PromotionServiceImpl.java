@@ -1,23 +1,20 @@
 package com.example.doantotnghiep.service.impl;
 
 import com.example.doantotnghiep.entity.Promotion;
-import com.example.doantotnghiep.exception.BadRequestException;
-import com.example.doantotnghiep.exception.InternalServerException;
-import com.example.doantotnghiep.exception.NotFoundException;
+import com.example.doantotnghiep.entity.exception.BadRequestException;
+import com.example.doantotnghiep.entity.exception.InternalServerException;
+import com.example.doantotnghiep.entity.exception.NotFoundException;
 import com.example.doantotnghiep.model.request.CreatePromotionRequest;
 import com.example.doantotnghiep.responsitory.PromotionRepository;
 import com.example.doantotnghiep.service.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.doantotnghiep.config.Contant.DISCOUNT_AMOUNT;
 import static com.example.doantotnghiep.config.Contant.DISCOUNT_PERCENT;
 
 @Component
@@ -52,7 +49,7 @@ public class PromotionServiceImpl implements PromotionService {
             if (createPromotionRequest.getMaxValue() < 1000) {
                 throw new BadRequestException("Mức giảm giá tối đa phải lớn hơn 1000");
             }
-        } else {
+        } else if (createPromotionRequest.getDiscountType() == DISCOUNT_AMOUNT) {
             if (createPromotionRequest.getDiscountValue() < 1000) {
                 throw new BadRequestException("Mức giảm giá phải lớn hơn 1000");
             }

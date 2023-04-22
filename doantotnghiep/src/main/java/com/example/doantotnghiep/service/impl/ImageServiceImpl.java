@@ -1,9 +1,9 @@
 package com.example.doantotnghiep.service.impl;
 
 import com.example.doantotnghiep.entity.Image;
-import com.example.doantotnghiep.exception.BadRequestException;
-import com.example.doantotnghiep.exception.InternalServerException;
-import com.example.doantotnghiep.exception.NotFoundException;
+import com.example.doantotnghiep.entity.exception.BadRequestException;
+import com.example.doantotnghiep.entity.exception.InternalServerException;
+import com.example.doantotnghiep.entity.exception.NotFoundException;
 import com.example.doantotnghiep.responsitory.ImageRepository;
 import com.example.doantotnghiep.security.CustomUserDetails;
 import com.example.doantotnghiep.service.ImageService;

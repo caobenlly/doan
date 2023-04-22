@@ -2,8 +2,8 @@ package com.example.doantotnghiep.controller.shop;
 
 
 import com.example.doantotnghiep.entity.*;
-import com.example.doantotnghiep.exception.BadRequestException;
-import com.example.doantotnghiep.exception.NotFoundException;
+import com.example.doantotnghiep.entity.exception.BadRequestException;
+import com.example.doantotnghiep.entity.exception.NotFoundException;
 import com.example.doantotnghiep.model.dto.CheckPromotion;
 import com.example.doantotnghiep.model.dto.DetailProductInfoDTO;
 import com.example.doantotnghiep.model.dto.PageableDTO;

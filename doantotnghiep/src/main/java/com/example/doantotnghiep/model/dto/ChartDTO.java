@@ -1,16 +1,17 @@
 package com.example.doantotnghiep.model.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
+
 @Setter
 @Getter
+@AllArgsConstructor
 public class ChartDTO {
-    private String label;
-    private int value;
+    private Date label;
+    private Long value;
 
-    public ChartDTO(String label, int value) {
-        this.label = label;
-        this.value = value;
-    }
+
 }
