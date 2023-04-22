@@ -1,9 +1,13 @@
 package com.example.doantotnghiep.model.dto;
 
+import com.example.doantotnghiep.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.sql.Timestamp;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,9 +22,21 @@ public class PostDTO {
 
     private String thumbnail;
 
-    private String createdAt;
+    private Timestamp createdAt;
 
-    private String publishedAt;
+    private Timestamp publishedAt;
+    private Timestamp modifiedAt;
+    private int status;
 
-    private String status;
+    public PostDTO(Post p) {
+        this.id = p.getId();
+        this.slug = p.getSlug();
+        this.title = p.getTitle();
+        this.thumbnail = p.getThumbnail();
+        this.createdAt = p.getCreatedAt();
+        this.status = p.getStatus();
+        this.modifiedAt = p.getModifiedAt();
+    }
+
+
 }

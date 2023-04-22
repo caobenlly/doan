@@ -2,10 +2,12 @@ package com.example.doantotnghiep.controller.admin;
 
 import com.example.doantotnghiep.entity.Post;
 import com.example.doantotnghiep.entity.User;
+import com.example.doantotnghiep.model.dto.PostDTO;
 import com.example.doantotnghiep.model.request.CreatePostRequest;
 import com.example.doantotnghiep.security.CustomUserDetails;
 import com.example.doantotnghiep.service.ImageService;
 import com.example.doantotnghiep.service.PostService;
+import org.hibernate.event.spi.PostDeleteEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -29,15 +31,10 @@ public class PostController {
     private ImageService imageService;
 
     @GetMapping("/admin/posts")
-    public ResponseEntity<Object> getPostManagePage(Model model,
-                                    @RequestParam(defaultValue = "1") Integer page,
-                                    @RequestParam(defaultValue = "") String title,
-                                    @RequestParam(defaultValue = "") String status) {
-        if (!status.equals("") && !status.equals("0") && !status.equals("1")) {
-            return new ResponseEntity<>("Lỗi",HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<Object> getPostManagePage(Model model) {
 
-        List<Post> result = postService.adminGetListPosts(title, status);
+
+        List<PostDTO> result = postService.adminGetListPosts();
 
 
 
@@ -55,10 +52,8 @@ public class PostController {
     }
 
     @GetMapping("/api/admin/posts")
-    public ResponseEntity<Object> getListPosts(@RequestParam(defaultValue = "", required = false) String title,
-                                               @RequestParam(defaultValue = "", required = false) String status,
-                                               @RequestParam(defaultValue = "1", required = false) Integer page) {
-        List<Post> posts = postService.adminGetListPosts(title, status);
+    public ResponseEntity<Object> getListPosts() {
+        List<PostDTO> posts = postService.adminGetListPosts();
         return ResponseEntity.ok(posts);
     }
 
