@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CreatePromotionRequest {
+public class  CreatePromotionRequest {
     @NotBlank(message = "Mã code rỗng")
     @Pattern(regexp="^[0-9A-Z-]+$", message = "Mã code không đúng định dạng")
     private String code;

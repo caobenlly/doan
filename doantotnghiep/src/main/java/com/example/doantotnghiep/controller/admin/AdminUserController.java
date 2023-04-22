@@ -23,7 +23,6 @@ public class AdminUserController {
     private UserService userService;
 
     @GetMapping("/admin/users")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<Object> homePages(Model model,
                             @RequestParam(defaultValue = "", required = false) String fullName,
                             @RequestParam(defaultValue = "", required = false) String phone,

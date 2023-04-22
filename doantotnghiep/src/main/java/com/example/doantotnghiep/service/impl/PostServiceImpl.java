@@ -13,10 +13,6 @@ import com.example.doantotnghiep.model.request.CreatePostRequest;
 import com.example.doantotnghiep.service.PostService;
 import com.example.doantotnghiep.utils.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
@@ -140,9 +136,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> adminGetListPosts(String title, String status) {
+    public List<PostDTO> adminGetListPosts() {
 
-        return postRepository.adminGetListPosts(title, status);
+        return postRepository.adminGetListPosts();
     }
 
     @Override

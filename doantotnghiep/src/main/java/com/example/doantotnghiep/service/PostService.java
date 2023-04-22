@@ -3,6 +3,7 @@ package com.example.doantotnghiep.service;
 import com.example.doantotnghiep.entity.Post;
 import com.example.doantotnghiep.entity.User;
 import com.example.doantotnghiep.model.dto.PageableDTO;
+import com.example.doantotnghiep.model.dto.PostDTO;
 import com.example.doantotnghiep.model.request.CreatePostRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,9 @@ public interface PostService {
 
     Post getPostById(long id);
 
-    List<Post> adminGetListPosts(String title, String status);
+    List<PostDTO> adminGetListPosts();
+
+
 
     List<Post> getLatesPost();
 

@@ -56,9 +56,9 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "title",nullable = false,length = 300)
+    @Column(name = "title",nullable = true,length = 300)
     private String title;
-    @Column(name = "content",columnDefinition = "TEXT")
+    @Column(name = "content",nullable = true,columnDefinition = "TEXT")
     private String content;
     @Column(name = "description",columnDefinition = "TEXT")
     private String description;
@@ -66,9 +66,9 @@ public class Post {
     private String slug;
     @Column(name = "thumbnail")
     private String thumbnail;
-    @Column(name = "created_at")
+    @Column(name = "created_at",nullable = true)
     private Timestamp createdAt;
-    @Column(name = "modified_at")
+    @Column(name = "modified_at",nullable = true)
     private Timestamp modifiedAt;
     @ManyToOne
     @JoinColumn(name = "created_by")

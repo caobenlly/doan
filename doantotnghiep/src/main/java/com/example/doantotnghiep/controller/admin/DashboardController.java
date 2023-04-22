@@ -51,8 +51,13 @@ public class DashboardController {
     private UserRepository userRepository;
 
     @GetMapping("/admin")
-    public String dashboard(Model model){
-        return "admin/index";
+    public ResponseEntity<Object> dashboard(Model model){
+        model.addAttribute("Post",postService.getCountPost());
+        model.addAttribute("Product",productService.getCountProduct());
+        model.addAttribute("Order",orderService.getCountOrder());
+        model.addAttribute("Category",categoryService.getCountCategories());
+        model.addAttribute("Brand",brandService.getCountBrands());
+        return ResponseEntity.ok(model);
     }
 
     @GetMapping("/api/admin/count/posts")
