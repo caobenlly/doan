@@ -97,7 +97,7 @@ public class PromotionServiceImpl implements PromotionService {
             if (createPromotionRequest.getMaxValue() < 1000) {
                 throw new BadRequestException("Mức giảm giá tối đa phải lớn hơn 1000");
             }
-        } else {
+        } else if (createPromotionRequest.getDiscountType() ==  DISCOUNT_AMOUNT){
             if (createPromotionRequest.getDiscountValue() < 1000) {
                 throw new BadRequestException("Mức giảm giá phải lớn hơn 1000");
             }
@@ -130,7 +130,7 @@ public class PromotionServiceImpl implements PromotionService {
         }
         promotion.setActive(createPromotionRequest.isActive());
         promotion.setPublic(createPromotionRequest.isPublic());
-        promotion.setCreatedAt(rs.get().getCreatedAt());
+        promotion.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         promotion.setId(id);
 
         try {

@@ -183,13 +183,13 @@ public class ProductController {
     @GetMapping("/api/products/export/excel")
     public void exportProductDataToExcelFile(HttpServletResponse response) {
         List<Product> result = productService.getAllProduct();
-        String fullPath = this.generateProductExcel(result, context, EXPORT_DATA_REPORT_FILE_NAME);
-        if (fullPath != null) {
-            this.fileDownload(fullPath, response, EXPORT_DATA_REPORT_FILE_NAME, "xlsx");
-        }
+        String fullPath = this.generateProductExcel(result, context, EXPORT_DATA_REPORT_FILE_NAME,response);
+//        if (fullPath != null) {
+//            this.fileDownload(fullPath, response, EXPORT_DATA_REPORT_FILE_NAME, "xlsx");
+//        }
     }
 
-    private String generateProductExcel(List<Product> products, ServletContext context, String fileName) {
+    private String generateProductExcel(List<Product> products, ServletContext context, String fileName,HttpServletResponse response ) {
         String filePath = context.getRealPath(TEMP_EXPORT_DATA_DIRECTORY);
         File file = new File(filePath);
         if (!file.exists()) {
@@ -287,7 +287,16 @@ public class ProductController {
                     totalSoldValue.setCellStyle(bodyCellStyle);
                 }
             }
-            workbook.write(fos);
+            // Write workbook to ByteArrayOutputStream
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            workbook.write(bos);
+            String base64 = java.util.Base64.getEncoder().encodeToString(bos.toByteArray());
+            // Set response headers
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.setHeader("Content-Disposition", "attachment; filename=\"product_list.xlsx\"");
+
+            // Write Base64 string to response OutputStream
+            response.getOutputStream().write(base64.getBytes());
             return file + "\\" + fileName + xlsx;
         } catch (Exception e) {
             return null;

@@ -10,6 +10,8 @@ import com.example.doantotnghiep.model.dto.PageableDTO;
 import com.example.doantotnghiep.model.dto.ProductInfoDTO;
 import com.example.doantotnghiep.model.request.CreateOrderRequest;
 import com.example.doantotnghiep.model.request.FilterProductRequest;
+import com.example.doantotnghiep.responsitory.ProductRepository;
+import com.example.doantotnghiep.responsitory.ProductSizeRepository;
 import com.example.doantotnghiep.security.CustomUserDetails;
 import com.example.doantotnghiep.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,10 @@ public class HomeController {
 
     @Autowired
     private PromotionService promotionService;
+    @Autowired
+    private ProductRepository repository;
+    @Autowired
+    private ProductSizeRepository productSizeRepository;
 
     @GetMapping("/shop/index")
     public ResponseEntity<?>  homePage(Model model){
@@ -183,12 +189,12 @@ public class HomeController {
         model.addAttribute("sizeVn", SIZE_VN);
 
         //Lấy danh sách sản phẩm
-        FilterProductRequest req = new FilterProductRequest(brandIds, categoryIds, new ArrayList<>(), (long) 0, Long.MAX_VALUE, 1);
-        PageableDTO result = productService.filterProduct(req);
-        model.addAttribute("totalPages", result.getTotalPages());
-        model.addAttribute("currentPage", result.getCurrentPage());
-        model.addAttribute("listProduct", result.getItems());
+        List<ProductInfoDTO> result = repository.getAllProduct();
+        model.addAttribute("Product", result);
 
+        // Lấy dữ liệu product theo size
+        List<ProductSize> sizes = productSizeRepository.findAll();
+        model.addAttribute("sizetheoproduct",sizes);
 
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
