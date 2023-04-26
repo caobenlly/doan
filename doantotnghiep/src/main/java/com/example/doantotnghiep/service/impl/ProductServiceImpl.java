@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -103,7 +104,7 @@ public class ProductServiceImpl implements ProductService {
         //Kiểm tra tên sản phẩm có tồn tại
         Product rs = productRepository.findByName(createProductRequest.getName());
         if (rs != null) {
-            if (!createProductRequest.getId().equals(rs.getId()))
+            if (!id .equals(rs.getId()))
                 throw new BadRequestException("Tên sản phẩm đã tồn tại trong hệ thống, Vui lòng chọn tên khác!");
         }
 
@@ -128,12 +129,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductById(String id) {
+    public  ProductsAdminResponse getProductById(String id) {
         Optional<Product> product = productRepository.findById(id);
+
         if (product == null) {
             throw new NotFoundException("Không tìm thấy sản phẩm trong hệ thống!");
         }
-        return product.get();
+        ArrayList<Long> list = new ArrayList<>();
+        ProductsAdminResponse pr = new ProductsAdminResponse(product.get());
+        List<ProductCategory> productCategory = productCategoryReponsitory.adminGetListCategory(pr.getMaSanPham());
+        for (ProductCategory it : productCategory ){
+            Optional<Category> category = categoryRepository.findById(it.getCategoryId());
+            list.add(category.get().getId());
+        }
+
+        pr.setDanhMuc(list);
+        return pr;
     }
 
     @Override
@@ -209,7 +220,7 @@ public class ProductServiceImpl implements ProductService {
         dto.setBrand(product.getBrand());
         dto.setFeedbackImages(product.getImageFeedBack());
         dto.setProductImages(product.getImages());
-        dto.setComments(product.getComments());
+//        dto.setComments(product.getComments());
 
         //Cộng sản phẩm xem
         product.setView(product.getView() + 1);

@@ -99,10 +99,10 @@ public class OrderServiceImpl implements OrderService {
             throw new BadRequestException("Size giày sản phẩm tạm hết, Vui lòng chọn sản phẩm khác!");
         }
 
-        //Kiểm tra giá sản phẩm
-        if (product.get().getSalePrice() != createOrderRequest.getProductPrice()) {
-            throw new BadRequestException("Giá sản phẩm thay đổi, Vui lòng đặt hàng lại!");
-        }
+//        //Kiểm tra giá sản phẩm
+//        if (product.get().getSalePrice() != createOrderRequest.getProductPrice()) {
+//            throw new BadRequestException("Giá sản phẩm thay đổi, Vui lòng đặt hàng lại!");
+//        }
         Order order = new Order();
         User user = new User();
         user.setId(userId);

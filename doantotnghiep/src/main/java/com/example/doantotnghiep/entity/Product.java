@@ -208,13 +208,14 @@ public class Product {
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
-    @ManyToMany
-    @JoinTable(
-            name = "product_category",
-            joinColumns =@JoinColumn(name = "product_id"),
-            inverseJoinColumns =@JoinColumn(name = "category_id")
-    )
-    private List<Category> categories;
+//    @ManyToMany
+////    @JoinTable(
+////            name = "product_category",
+////            joinColumns =@JoinColumn(name = "product_id"),
+////            inverseJoinColumns =@JoinColumn(name = "category_id")
+////    )
+////    @JoinColumn(name = "category_id")
+//    private List<Category> categories;
 
 //    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
 //    private List<CartProduct> cartProducts = new ArrayList<>();
