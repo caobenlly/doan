@@ -127,8 +127,10 @@ public class DashboardController {
         long dem = 0;
         for(Category category : categories){
             for (ProductsAdminResponse tr : adminResponses){
-                if(tr.getDanhMuc().equals(category.getName())){
-                    dem += tr.getDaBan();
+                for (Object danhmuc : tr.getDanhMuc()) {
+                    if (danhmuc.equals(category.getName())) {
+                        dem += tr.getDaBan();
+                    }
                 }
             }
             hashMap1.put(category.getName(), dem);

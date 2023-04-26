@@ -40,5 +40,5 @@ public class DetailProductInfoDTO {
 
     private Brand brand;
 
-    private List<Comment> comments;
+//    private List<Comment> comments;
 }

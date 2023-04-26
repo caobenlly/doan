@@ -33,7 +33,7 @@ public interface ProductService {
 //    Product createProduct(CreateProductRequest createProductRequest);
 
     //Lấy chi tiết sản phẩm
-    Product getProductById(String id);
+    ProductsAdminResponse getProductById(String id);
 
     //Xóa sản phẩm theo id
     void deleteProduct(String[] ids);

@@ -48,7 +48,7 @@ public class ProductMapper {
             category.setId(id);
             categories.add(category);
         }
-        product.setCategories(categories);
+//        product.setCategories(categories);
 
         return product;
     }

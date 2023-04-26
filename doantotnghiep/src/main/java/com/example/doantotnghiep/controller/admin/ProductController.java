@@ -100,7 +100,7 @@ public class ProductController {
     public ResponseEntity<Object> getProductUpdatePage(Model model, @PathVariable String id) {
 
         // Lấy thông tin sản phẩm theo id
-        Product product = productService.getProductById(id);
+        ProductsAdminResponse product = productService.getProductById(id);
         model.addAttribute("product", product);
 
         // Lấy danh sách ảnh của user
@@ -138,7 +138,7 @@ public class ProductController {
 
     @GetMapping("/api/admin/products/{id}")
     public ResponseEntity<Object> getProductDetail(@PathVariable String id) {
-        Product rs = productService.getProductById(id);
+        ProductsAdminResponse rs = productService.getProductById(id);
         return ResponseEntity.ok(rs);
     }
 
