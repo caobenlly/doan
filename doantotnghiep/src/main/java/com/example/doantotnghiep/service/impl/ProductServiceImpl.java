@@ -171,7 +171,7 @@ public class ProductServiceImpl implements ProductService {
         try {
             // Delete product size
             productSizeRepository.deleteByProductId(id);
-
+            productCategoryReponsitory.deleteByProductId(id);
             productRepository.deleteById(id);
         } catch (Exception ex) {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();

@@ -4,6 +4,7 @@ import com.example.doantotnghiep.entity.Product;
 import com.example.doantotnghiep.model.dto.ChartDTO;
 import com.example.doantotnghiep.model.dto.ProductInfoDTO;
 import com.example.doantotnghiep.model.dto.ShortProductInfoDTO;
+import com.example.doantotnghiep.model.responeadmin.ListSanPhamHome;
 import com.example.doantotnghiep.model.responeadmin.ProductsAdminResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -128,6 +129,6 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
 
     //Lấy sản phẩm mới nhất
-    @Query(value = "SELECT NEW com.example.doantotnghiep.model.dto.ProductInfoDTO(p) FROM Product p ")
-    List<ProductInfoDTO> getAllProduct();
+    @Query(value = "SELECT NEW com.example.doantotnghiep.model.responeadmin.ListSanPhamHome(a,b,d,e) FROM Product a INNER JOIN Brand b on a.brand.id = b.id INNER JOIN ProductCategory c on a.id = c.id INNER JOIN Category d on c.categoryId = d.id INNER JOIN ProductSize e on a.id = e.productId")
+    List<ListSanPhamHome> getAllProduct();
 }

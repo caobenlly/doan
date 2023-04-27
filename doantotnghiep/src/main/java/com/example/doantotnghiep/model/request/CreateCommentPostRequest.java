@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @Getter
 public class CreateCommentPostRequest {
-    private long postId;
+    private long userId;
     @NotBlank(message = "Nội dung trống!")
     private String content;
 }

@@ -10,8 +10,9 @@ import com.example.doantotnghiep.model.dto.PageableDTO;
 import com.example.doantotnghiep.model.dto.ProductInfoDTO;
 import com.example.doantotnghiep.model.request.CreateOrderRequest;
 import com.example.doantotnghiep.model.request.FilterProductRequest;
-import com.example.doantotnghiep.responsitory.ProductRepository;
-import com.example.doantotnghiep.responsitory.ProductSizeRepository;
+import com.example.doantotnghiep.model.responeadmin.ListSanPhamHome;
+import com.example.doantotnghiep.model.responeadmin.ProductsAdminResponse;
+import com.example.doantotnghiep.responsitory.*;
 import com.example.doantotnghiep.security.CustomUserDetails;
 import com.example.doantotnghiep.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static com.example.doantotnghiep.config.Contant.*;
 
@@ -54,6 +54,13 @@ public class HomeController {
     @Autowired
     private ProductSizeRepository productSizeRepository;
 
+    @Autowired
+    private CommentRepository commentRepository;
+    @Autowired
+    private ProductCategoryReponsitory productCategoryReponsitory;
+
+    @Autowired
+    private UserRepository userRepository;
     @GetMapping("/shop/index")
     public ResponseEntity<?>  homePage(Model model){
 
@@ -167,34 +174,11 @@ public class HomeController {
     @GetMapping("/san-pham/shop/product")
     public ResponseEntity<?> getProductShopPages(Model model){
 
-        //Lấy danh sách nhãn hiệu
-        List<Brand> brands = brandService.getListBrand();
-        model.addAttribute("brands",brands);
-        List<Long> brandIds = new ArrayList<>();
-        for (Brand brand : brands) {
-            brandIds.add(brand.getId());
-        }
-        model.addAttribute("brandIds", brandIds);
-
-        //Lấy danh sách danh mục
-        List<Category> categories = categoryService.getListCategories();
-        model.addAttribute("categories",categories);
-        List<Long> categoryIds = new ArrayList<>();
-        for (Category category : categories) {
-            categoryIds.add(category.getId());
-        }
-        model.addAttribute("categoryIds", categoryIds);
-
-        //Danh sách size của sản phẩm
-        model.addAttribute("sizeVn", SIZE_VN);
-
         //Lấy danh sách sản phẩm
-        List<ProductInfoDTO> result = repository.getAllProduct();
+
+        List<ListSanPhamHome> result = repository.getAllProduct();
         model.addAttribute("Product", result);
 
-        // Lấy dữ liệu product theo size
-        List<ProductSize> sizes = productSizeRepository.findAll();
-        model.addAttribute("sizetheoproduct",sizes);
 
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
@@ -270,4 +254,30 @@ public class HomeController {
         return "shop/doi-hang";
     }
 
+    @GetMapping("/listcomment/{id}")
+    public ResponseEntity<Object> getListComment(@PathVariable String id){
+        List<Comment> productInfoDTOS = commentRepository.findCommentByProductId(id) ;
+
+        List<String> rp = new ArrayList<>();
+        Map<String,String> it = new HashMap<>();
+        for (Comment comment : productInfoDTOS) {
+            Optional<User> user = userRepository.findById(comment.getId());
+            if (user.isPresent()){
+                it.put(user.get().getFullName(),comment.getContent());
+            }
+
+        }
+        return ResponseEntity.ok(it);
+    }
+
+
+    @GetMapping("/listfeedback/{id}")
+    public ResponseEntity<Object> getListFeeback(@PathVariable String id) {
+        Optional<Product> productsAdminResponse = repository.findById(id);
+        List<String> img = new ArrayList<>();
+        if (productsAdminResponse.isPresent()) {
+            img = productsAdminResponse.get().getImageFeedBack();
+        }
+        return ResponseEntity.ok(img);
+    }
 }

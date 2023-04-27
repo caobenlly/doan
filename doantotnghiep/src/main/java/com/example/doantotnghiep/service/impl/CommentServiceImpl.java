@@ -12,6 +12,7 @@ import com.example.doantotnghiep.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
 import java.sql.Timestamp;
 
 @Component
@@ -20,17 +21,25 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    EntityManager entityManager;
     @Override
-    public Comment createCommentPost(CreateCommentPostRequest createCommentPostRequest,Long userId) {
+    public Comment createCommentPost(CreateCommentPostRequest createCommentPostRequest, String id ) {
+
+//        Post post = new Post();
+//
+//        post.setId(createCommentPostRequest.getPostId());
         Comment comment = new Comment();
-        Post post = new Post();
-        post.setId(createCommentPostRequest.getPostId());
-        comment.setPost(post);
-        User user = new User();
-        user.setId(userId);
-        comment.setUser(user);
+
+//        comment.setPost(post);
         comment.setContent(createCommentPostRequest.getContent());
         comment.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        Product product = new Product();
+        product.setId(id);
+        comment.setProduct(product);
+        User user = new User();
+        user.setId(createCommentPostRequest.getUserId());
+        comment.setUser(user);
         try {
             commentRepository.save(comment);
         } catch (Exception e) {

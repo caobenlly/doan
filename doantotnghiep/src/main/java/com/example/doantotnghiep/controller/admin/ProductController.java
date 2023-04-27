@@ -18,6 +18,7 @@ import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -160,6 +161,8 @@ public class ProductController {
         return ResponseEntity.ok("Xóa sản phẩm thành công!");
     }
 
+
+    @Transactional
     @DeleteMapping("/api/admin/products/{id}")
     public ResponseEntity<Object> deleteProductById(@PathVariable String id) {
         productService.deleteProductById(id);
