@@ -24,9 +24,9 @@ public interface OrderService {
 
     void updateStatusOrder(UpdateStatusOrderRequest updateStatusOrderRequest, long orderId, Long userId);
 
-    List<OrderInfoDTO> getListOrderOfPersonByStatus(int status, long userId);
+    List<OrderInfoDTO> getListOrderOfPersonByStatus(long userId);
 
-    OrderDetailDTO userGetDetailById(long id, long userId);
+    OrderDetailDTO userGetDetailById(long id);
 
     void userCancelOrder(long id, long userId);
 

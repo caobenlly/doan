@@ -140,7 +140,7 @@ public class OrderController {
 
         //Get list order pending
         User user =((CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
-        List<OrderInfoDTO> orderList = orderService.getListOrderOfPersonByStatus(ORDER_STATUS,user.getId());
+        List<OrderInfoDTO> orderList = orderService.getListOrderOfPersonByStatus( user.getId());
         model.addAttribute("orderList",orderList);
 
         return ResponseEntity.ok(model);
@@ -154,7 +154,7 @@ public class OrderController {
         }
 
         User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
-        List<OrderInfoDTO> orders = orderService.getListOrderOfPersonByStatus(status, user.getId());
+        List<OrderInfoDTO> orders = orderService.getListOrderOfPersonByStatus( user.getId());
 
         return ResponseEntity.ok(orders);
     }
@@ -163,7 +163,7 @@ public class OrderController {
     public ResponseEntity<Object> getDetailOrderPage(Model model, @PathVariable int id) {
         User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
 
-        OrderDetailDTO order = orderService.userGetDetailById(id, user.getId());
+        OrderDetailDTO order = orderService.userGetDetailById(id);
         if (order == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có đơn hàng");
         }

@@ -284,8 +284,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderInfoDTO> getListOrderOfPersonByStatus(int status, long userId) {
-        List<OrderInfoDTO> list = orderRepository.getListOrderOfPersonByStatus(status, userId);
+    public List<OrderInfoDTO> getListOrderOfPersonByStatus(long userId) {
+        List<OrderInfoDTO> list = orderRepository.getListOrderOfPersonByStatus(userId);
 
         for (OrderInfoDTO dto : list) {
             for (int i = 0; i < SIZE_VN.size(); i++) {
@@ -299,8 +299,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDetailDTO userGetDetailById(long id, long userId) {
-        OrderDetailDTO order = orderRepository.userGetDetailById(id, userId);
+    public OrderDetailDTO userGetDetailById(long id) {
+        OrderDetailDTO order = orderRepository.userGetDetailById(id);
         if (order == null) {
             return null;
         }

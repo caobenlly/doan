@@ -51,12 +51,19 @@ public class PostController {
         return ResponseEntity.ok(model);
     }
 
-    @GetMapping("/api/admin/posts")
+    @GetMapping("/api/homepage/posts")
     public ResponseEntity<Object> getListPosts() {
         List<PostDTO> posts = postService.adminGetListPosts();
         return ResponseEntity.ok(posts);
     }
 
+    @GetMapping("/api/homepage/posts/{id}")
+    public ResponseEntity<Object> getPosts(Model model, @PathVariable long id) {
+        Post post = postService.getPostById(id);
+        model.addAttribute("post", post);
+
+        return ResponseEntity.ok(model);
+    }
     @PostMapping("/api/admin/posts")
     public ResponseEntity<Object> createPost(@Valid @RequestBody CreatePostRequest createPostRequest) {
         User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
