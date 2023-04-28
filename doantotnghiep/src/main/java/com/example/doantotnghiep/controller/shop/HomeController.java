@@ -60,7 +60,12 @@ public class HomeController {
     private ProductCategoryReponsitory productCategoryReponsitory;
 
     @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
     @GetMapping("/shop/index")
     public ResponseEntity<?>  homePage(Model model){
 
@@ -174,9 +179,43 @@ public class HomeController {
     @GetMapping("/san-pham/shop/product")
     public ResponseEntity<?> getProductShopPages(Model model){
 
+        //Lấy danh sách nhãn hiệu
+        List<Brand> brands = brandService.getListBrand();
+        model.addAttribute("brands",brands);
+
+
+        //Lấy danh sách danh mục
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories",categories);
+        //Danh sách size của sản phẩm
+        model.addAttribute("sizeVn", SIZE_VN);
+
         //Lấy danh sách sản phẩm
 
+
         List<ListSanPhamHome> result = repository.getAllProduct();
+        for (ListSanPhamHome tr : result){
+           List<ProductSize> productSize = productSizeRepository.findByProductId(tr.getId());
+            List<Integer> size = new ArrayList<>();
+           for (ProductSize productSize1 : productSize){
+               size.add(productSize1.getSize());
+           }
+           tr.setSize(size);
+        }
+        for (ListSanPhamHome tr : result){
+            List<ProductCategory> ct = productCategoryReponsitory.adminGetListCategory(tr.getId());
+
+            List<String> category = new ArrayList<>();
+            for (ProductCategory a : ct){
+                Optional<Category> categories1 = categoryRepository.findById(a.getCategoryId());
+
+                    category.add(categories1.get().getName());
+
+            }
+            tr.setCategoryName(category);
+
+        }
+
         model.addAttribute("Product", result);
 
 
@@ -280,4 +319,5 @@ public class HomeController {
         }
         return ResponseEntity.ok(img);
     }
+
 }

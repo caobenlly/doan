@@ -1,9 +1,12 @@
 package com.example.doantotnghiep.model.dto;
 
+import com.example.doantotnghiep.entity.Order;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,14 +24,23 @@ public class OrderInfoDTO {
     private double sizeCm;
 
     private String productName;
+    private int status;
+    private List productImg;
 
-    private String productImg;
-
-    public OrderInfoDTO(long id, long totalPrice, int sizeVn, String productName, String productImg) {
+    public OrderInfoDTO(long id, long totalPrice, int sizeVn, String productName, List productImg) {
         this.id = id;
         this.totalPrice = totalPrice;
         this.sizeVn = sizeVn;
         this.productName = productName;
         this.productImg = productImg;
+    }
+
+    public OrderInfoDTO(Order od) {
+        this.id = od.getId();
+        this.totalPrice = od.getTotalPrice();
+        this.status = od.getStatus();
+        this.productName = od.getProduct().getName();
+        this.sizeVn = od.getSize();
+        this.productImg = od.getProduct().getImages();
     }
 }

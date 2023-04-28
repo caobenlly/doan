@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -25,10 +26,10 @@ public class ListSanPhamHome {
     private long totalSold;
     private long promotionPrice;
     private String brandName;
-    private String categoryName;
-    private int size;
+    private List<String> categoryName;
+    private List<Integer> size;
 
-    public ListSanPhamHome(Product p, Brand b, Category d, ProductSize e) {
+    public ListSanPhamHome(Product p, Brand b) {
         this.id = p.getId();
         this.name = p.getName();
         this.slug = p.getSlug();
@@ -37,7 +38,6 @@ public class ListSanPhamHome {
         this.images = p.getImages();
         this.totalSold = p.getTotalSold();
         this.brandName = b.getName();
-        this.categoryName = d.getName();
-        this.size = e.getSize();
+
     }
 }
