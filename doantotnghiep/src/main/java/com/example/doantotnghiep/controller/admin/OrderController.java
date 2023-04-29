@@ -192,11 +192,10 @@ public class OrderController {
     }
 
 
-    @DeleteMapping("/api/delete-order/{id}")
+    @DeleteMapping("/admin/orders/delete/{id}")
     public ResponseEntity<Object> deleteOrder(@PathVariable long id) {
 
         orderRepository.deleteById(id);
-
         return ResponseEntity.ok("Xóa đơn hàng thành công");
     }
 }
