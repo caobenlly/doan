@@ -12,7 +12,7 @@ public class OrdersAdminResponse {
     private Long id;
     private String nguoiNhan;
     private String dienThoai;
-    private String trangThai;
+    private int trangThai;
     private String sanPham;
     private String ngayTao;
     private String ngaySua;
