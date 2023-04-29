@@ -379,4 +379,5 @@ public class OrderServiceImpl implements OrderService {
             statisticRepository.save(statistic);
         }
     }
+
 }

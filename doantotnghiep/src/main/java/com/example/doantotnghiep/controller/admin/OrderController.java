@@ -11,6 +11,7 @@ import com.example.doantotnghiep.model.request.CreateOrderRequest;
 import com.example.doantotnghiep.model.request.UpdateDetailOrder;
 import com.example.doantotnghiep.model.request.UpdateStatusOrderRequest;
 import com.example.doantotnghiep.model.responeadmin.OrdersAdminResponse;
+import com.example.doantotnghiep.responsitory.OrderRepository;
 import com.example.doantotnghiep.security.CustomUserDetails;
 import com.example.doantotnghiep.service.OrderService;
 import com.example.doantotnghiep.service.ProductService;
@@ -39,6 +40,9 @@ public class OrderController {
 
     @Autowired
     private PromotionService promotionService;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     @GetMapping("/admin/orders")
     public ResponseEntity<Object> getListOrderPage(Model model,
@@ -187,4 +191,12 @@ public class OrderController {
         return ResponseEntity.ok("Hủy đơn hàng thành công");
     }
 
+
+    @DeleteMapping("/api/delete-order/{id}")
+    public ResponseEntity<Object> deleteOrder(@PathVariable long id) {
+
+        orderRepository.deleteById(id);
+
+        return ResponseEntity.ok("Xóa đơn hàng thành công");
+    }
 }

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -36,9 +38,9 @@ public class OrderDetailDTO {
 
     private String productName;
 
-    private String productImg;
+    private List productImg;
 
-    public OrderDetailDTO (long id, long totalPrice, long productPrice, String receiverName, String receiverPhone, String receiverAddress, int status, int sizeVn, String productName, String productImg) {
+    public OrderDetailDTO (long id, long totalPrice, long productPrice, String receiverName, String receiverPhone, String receiverAddress, int status, int sizeVn, String productName, List productImg) {
         this.id = id;
         this.totalPrice = totalPrice;
         this.productPrice = productPrice;
@@ -61,6 +63,6 @@ public class OrderDetailDTO {
         this.status = od.getStatus();
         this.productName = od.getProduct().getName();
         this.sizeVn = od.getSize();
-        this.productImg = od.getProduct().getImages().toString();
+        this.productImg = od.getProduct().getImages() ;
     }
 }
