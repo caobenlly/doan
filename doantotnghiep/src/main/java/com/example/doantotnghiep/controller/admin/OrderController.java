@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.doantotnghiep.config.Contant.*;
 
@@ -126,9 +127,14 @@ public class OrderController {
     }
 
     @PutMapping("/api/admin/orders/update-detail/{id}")
-    public ResponseEntity<Object> updateDetailOrder(@Valid @RequestBody UpdateDetailOrder detailOrder, @PathVariable long id) {
-        User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
-        orderService.updateDetailOrder(detailOrder, id, user.getId());
+    public ResponseEntity<Object> updateDetailOrder(@RequestParam int trangThai,@PathVariable long id) {
+        Optional<Order> order = orderRepository.findById(id);
+        if(!order.isPresent()){
+            throw new BadRequestException("Không có đơn hàng");
+        }
+        order.get().setStatus(trangThai);
+        orderRepository.save(order.get());
+
         return ResponseEntity.ok("Cập nhật thành công");
     }
 

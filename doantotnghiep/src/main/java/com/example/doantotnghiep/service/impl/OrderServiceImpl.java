@@ -69,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
                 ordersAdminResponse.setId(orderlist.getId());
                 ordersAdminResponse.setNguoiNhan(orderlist.getReceiverName());
                 ordersAdminResponse.setDienThoai(orderlist.getReceiverPhone());
-                ordersAdminResponse.setTrangThai(String.valueOf(orderlist.getStatus()));
+                ordersAdminResponse.setTrangThai(orderlist.getStatus());
                 ordersAdminResponse.setSanPham(orderlist.getProduct().getName());
                 if (product.get().getCreatedAt() != null) {
                     ordersAdminResponse.setNgayTao(product.get().getCreatedAt().toString());
