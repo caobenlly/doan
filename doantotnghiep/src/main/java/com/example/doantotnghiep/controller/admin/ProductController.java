@@ -176,7 +176,7 @@ public class ProductController {
         return ResponseEntity.ok("Cập nhật thành công!");
     }
 
-    @PutMapping("/api/admin/products/{id}/update-feedback-image")
+    @PutMapping("/api/products/{id}/update-feedback-image")
     public ResponseEntity<?> updatefeedBackImages(@PathVariable String id, @Valid @RequestBody UpdateFeedBackRequest req) {
         productService.updatefeedBackImages(id, req);
 
