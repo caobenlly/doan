@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 @CrossOrigin("*")
 public class vnpayRefund extends HttpServlet {
 
-    @GetMapping ("/api/thongtinthanhtoantest")
+    @GetMapping ("/thongtinthanhtoantest")
     protected void doCheck(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
         Map fields = new HashMap();
         for (Enumeration params = request.getParameterNames(); params.hasMoreElements(); ) {
