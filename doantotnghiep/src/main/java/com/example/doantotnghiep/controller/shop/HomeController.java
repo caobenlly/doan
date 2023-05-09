@@ -10,6 +10,7 @@ import com.example.doantotnghiep.model.dto.PageableDTO;
 import com.example.doantotnghiep.model.dto.ProductInfoDTO;
 import com.example.doantotnghiep.model.request.CreateOrderRequest;
 import com.example.doantotnghiep.model.request.FilterProductRequest;
+import com.example.doantotnghiep.model.responeadmin.CommentResponse;
 import com.example.doantotnghiep.model.responeadmin.ListSanPhamHome;
 import com.example.doantotnghiep.model.responeadmin.ProductsAdminResponse;
 import com.example.doantotnghiep.responsitory.*;
@@ -294,19 +295,23 @@ public class HomeController {
     }
 
     @GetMapping("/listcomment/{id}")
-    public ResponseEntity<Object> getListComment(@PathVariable String id){
+    public ResponseEntity<Object> getListComment(@PathVariable String id, Model model){
         List<Comment> productInfoDTOS = commentRepository.findCommentByProductId(id) ;
 
         List<String> rp = new ArrayList<>();
+//        List<CommentResponse> productComment = new ArrayList<>();
         Map<String,String> it = new HashMap<>();
         for (Comment comment : productInfoDTOS) {
-            Optional<User> user = userRepository.findById(comment.getId());
-            if (user.isPresent()){
-                it.put(user.get().getFullName(),comment.getContent());
-            }
+            Optional<User> user = userRepository.findById(comment.getUser().getId());
+            List<CommentResponse> productComment = commentRepository.getListComment(id) ;
 
+            if (user.get().getFullName() == null){
+                throw new BadRequestException("user để trống tên"+user.get().getEmail());
+            }
+            model.addAttribute("Listcomment",productComment);
         }
-        return ResponseEntity.ok(it);
+
+        return ResponseEntity.ok(model);
     }
 
 
