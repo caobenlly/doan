@@ -38,7 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 public class vnpayQuery extends HttpServlet {
 
     @Override
-    @PostMapping ("/thanhtoan")
+    @PostMapping ("/api/thanhtoan")
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
