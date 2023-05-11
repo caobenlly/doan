@@ -6,7 +6,9 @@
 package com.example.doantotnghiep.controller.shop;
 
 
+import com.example.doantotnghiep.model.responeadmin.ThanhToanRespone;
 import com.google.gson.JsonObject;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 public class vnpayRefund extends HttpServlet {
 
     @GetMapping ("/thongtinthanhtoantest")
-    protected void doCheck(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+    protected ResponseEntity<?> doCheck(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
         Map fields = new HashMap();
         for (Enumeration params = request.getParameterNames(); params.hasMoreElements(); ) {
             String fieldName = (String) params.nextElement();
@@ -56,9 +58,14 @@ public class vnpayRefund extends HttpServlet {
 
 //        if (signValue.equals(vnp_SecureHash)) {
             if ("00".equals(request.getParameter("vnp_ResponseCode"))) {
-                resp.getWriter().write("GD Thanh cong");
+                ThanhToanRespone rp = new ThanhToanRespone();
+                rp.setMagiaodich(request.getParameter("vnp_BankTranNo"));
+                rp.setSotien(request.getParameter("vnp_Amount"));
+                rp.setStatus("GD Thành Công");
+                rp.setTendonhang(request.getParameter("vnp_OrderInfo"));
+                return ResponseEntity.ok(rp);
             } else {
-                resp.getWriter().write("GD Khong thanh cong");
+                return ResponseEntity.ok("GD Không Thành Công");
             }
 
 //        else {

@@ -54,6 +54,8 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+
+
     @Override
     public List<ProductsAdminResponse> adminGetListProduct() {
 
@@ -85,6 +87,13 @@ public class ProductServiceImpl implements ProductService {
         product.setTotalSold(0);
         product.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 
+        for (int  siz : createProductRequest.getListSize()){
+            ProductSize productSize = new ProductSize();
+            productSize.setQuantity(createProductRequest.getQuantity());
+            productSize.setProductId(id);
+            productSize.setSize(siz);
+            productSizeRepository.save(productSize);
+        }
         try {
             productRepository.save(product);
         } catch (Exception ex) {
@@ -121,6 +130,11 @@ public class ProductServiceImpl implements ProductService {
         Product result = ProductMapper.toProduct(createProductRequest);
         result.setId(id);
         result.setModifiedAt(new Timestamp(System.currentTimeMillis()));
+
+        List<ProductSize> productSize = productSizeRepository.findByProductId(id);
+        for (ProductSize siz : productSize){
+            siz.setQuantity(createProductRequest.getQuantity());
+        }
         try {
             productRepository.save(result);
         } catch (Exception e) {
