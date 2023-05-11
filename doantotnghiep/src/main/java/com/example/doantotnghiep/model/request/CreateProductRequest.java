@@ -44,4 +44,7 @@ public class CreateProductRequest {
     private ArrayList<String> feedBackImages;
 
     private int status;
+
+    private ArrayList<Integer> listSize;
+    private int quantity;
 }

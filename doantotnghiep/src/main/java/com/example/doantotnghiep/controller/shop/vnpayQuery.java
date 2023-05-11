@@ -84,7 +84,7 @@ public class vnpayQuery extends HttpServlet {
         //Billing
         vnp_Params.put("vnp_Bill_Mobile", req.getParameter("txt_billing_mobile"));
         vnp_Params.put("vnp_Bill_Email", req.getParameter("txt_billing_email"));
-        String fullName = "NGUYEN VAN A";
+        String fullName = "Nguyễn Huy Hùng";
         if (fullName != null && !fullName.isEmpty()) {
             int idx = fullName.indexOf(' ');
             String firstName = fullName.substring(0, idx);
