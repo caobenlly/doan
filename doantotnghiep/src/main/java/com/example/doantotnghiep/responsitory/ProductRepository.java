@@ -129,6 +129,6 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
 
     //Lấy sản phẩm mới nhất
-    @Query(value = "SELECT NEW com.example.doantotnghiep.model.responeadmin.ListSanPhamHome(a,b) FROM Product a INNER JOIN Brand b on a.brand.id = b.id ")
+    @Query(value = "SELECT NEW com.example.doantotnghiep.model.responeadmin.ListSanPhamHome(a,b) FROM Product a INNER JOIN Brand b on a.brand.id = b.id  where a.status =1")
     List<ListSanPhamHome> getAllProduct();
 }
