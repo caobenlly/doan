@@ -146,7 +146,7 @@ public class ProductController {
     @PostMapping("/api/admin/products")
     public ResponseEntity<Object> createProduct(@Valid @RequestBody CreateProductRequest createProductRequest) {
         Product product = productService.createProduct(createProductRequest);
-        return ResponseEntity.ok(product);
+        return ResponseEntity.ok("Thêm sản phẩm thành công");
     }
 
     @PutMapping("/api/admin/products/{id}")

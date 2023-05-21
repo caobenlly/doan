@@ -26,6 +26,6 @@ public class CreatePostRequest {
     private String description;
 
     private int status;
-
+    @NotNull(message = "Nội dung rỗng")
     private String image;
 }

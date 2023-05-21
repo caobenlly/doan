@@ -46,9 +46,6 @@ public class PromotionServiceImpl implements PromotionService {
             if (createPromotionRequest.getDiscountValue() < 1 || createPromotionRequest.getDiscountValue() > 100) {
                 throw new BadRequestException("Mức giảm giá từ 1% - 100%");
             }
-            if (createPromotionRequest.getMaxValue() < 1000) {
-                throw new BadRequestException("Mức giảm giá tối đa phải lớn hơn 1000");
-            }
         } else if (createPromotionRequest.getDiscountType() == DISCOUNT_AMOUNT) {
             if (createPromotionRequest.getDiscountValue() < 1000) {
                 throw new BadRequestException("Mức giảm giá phải lớn hơn 1000");
@@ -94,9 +91,7 @@ public class PromotionServiceImpl implements PromotionService {
             if (createPromotionRequest.getDiscountValue() < 1 || createPromotionRequest.getDiscountValue() > 100) {
                 throw new BadRequestException("Mức giảm giá từ 1 - 100%");
             }
-            if (createPromotionRequest.getMaxValue() < 1000) {
-                throw new BadRequestException("Mức giảm giá tối đa phải lớn hơn 1000");
-            }
+
         } else if (createPromotionRequest.getDiscountType() ==  DISCOUNT_AMOUNT){
             if (createPromotionRequest.getDiscountValue() < 1000) {
                 throw new BadRequestException("Mức giảm giá phải lớn hơn 1000");

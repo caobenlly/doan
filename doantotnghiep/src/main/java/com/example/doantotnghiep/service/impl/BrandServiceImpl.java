@@ -40,6 +40,9 @@ public class BrandServiceImpl implements BrandService {
         if (brand != null) {
             throw new BadRequestException("Tên nhãn hiệu đã tồn tại trong hệ thống, Vui lòng chọn tên khác!");
         }
+        if (createBrandRequest.getThumbnail() == null && createBrandRequest.isStatus()==true) {
+            throw new BadRequestException("Vui lòng thêm ảnh!");
+        }
         brand = BrandMapper.toBrand(createBrandRequest);
         brandRepository.save(brand);
         return brand;
@@ -51,11 +54,10 @@ public class BrandServiceImpl implements BrandService {
         if (brand.equals(null)) {
             throw new NotFoundException("Tên nhãn hiệu không tồn tại!");
         }
-        Brand br = brandRepository.findByName(createBrandRequest.getName());
-        if (br != null) {
-            if (!createBrandRequest.getId().equals(br.getId()))
-                throw new BadRequestException("Tên nhãn hiệu " + createBrandRequest.getName() + " đã tồn tại trong hệ thống, Vui lòng chọn tên khác!");
-        }
+//        Brand brand1 = brandRepository.findByName(createBrandRequest.getName());
+//        if (brand1 != null) {
+//            throw new BadRequestException("Tên nhãn hiệu đã tồn tại trong hệ thống, Vui lòng chọn tên khác!");
+//        }
         Brand rs = brand.get();
         rs.setId(id);
         rs.setName(createBrandRequest.getName());
@@ -67,7 +69,7 @@ public class BrandServiceImpl implements BrandService {
         try {
             brandRepository.save(rs);
         } catch (Exception ex) {
-            throw new InternalServerException("Lỗi khi chỉnh sửa nhãn hiệu");
+            throw new InternalServerException("Tên nhãn hiệu đã tồn tại");
         }
     }
 

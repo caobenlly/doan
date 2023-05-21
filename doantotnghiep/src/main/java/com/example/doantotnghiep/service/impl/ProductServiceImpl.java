@@ -87,6 +87,7 @@ public class ProductServiceImpl implements ProductService {
         product.setTotalSold(0);
         product.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 
+
         for (int  siz : createProductRequest.getListSize()){
             ProductSize productSize = new ProductSize();
             productSize.setQuantity(createProductRequest.getQuantity());
@@ -94,8 +95,15 @@ public class ProductServiceImpl implements ProductService {
             productSize.setSize(siz);
             productSizeRepository.save(productSize);
         }
+
         try {
             productRepository.save(product);
+            for (int  siz : createProductRequest.getCategoryIds()){
+                ProductCategory productCategory = new ProductCategory();
+                productCategory.setCategoryId((long) siz);
+                productCategory.setId(product.getId());
+                productCategoryReponsitory.save(productCategory);
+            }
         } catch (Exception ex) {
             throw new InternalServerException("Lỗi khi thêm sản phẩm");
         }

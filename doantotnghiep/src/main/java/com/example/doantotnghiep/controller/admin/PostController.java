@@ -69,7 +69,7 @@ public class PostController {
         User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
         Post post = postService.createPost(createPostRequest, user);
 
-        return ResponseEntity.ok(post);
+        return ResponseEntity.ok("Thêm mới thành công");
     }
 
     @GetMapping("/admin/posts/{id}")

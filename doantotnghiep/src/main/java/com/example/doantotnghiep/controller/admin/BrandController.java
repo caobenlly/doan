@@ -49,7 +49,7 @@ public class BrandController {
     @PostMapping("/api/admin/brands")
     public ResponseEntity<Object> createBrand(@Valid @RequestBody CreateBrandRequest createBrandRequest) {
         Brand brand = brandService.createBrand(createBrandRequest);
-        return ResponseEntity.ok(BrandMapper.toBrandDTO(brand));
+        return ResponseEntity.ok("Thêm mới nhãn hiệu thành công");
     }
 
     @PutMapping("/api/admin/brands/{id}")
