@@ -13,6 +13,7 @@ public class OrdersAdminResponse {
     private String nguoiNhan;
     private String dienThoai;
     private int trangThai;
+    private String diaChi;
     private String sanPham;
     private String ngayTao;
     private String ngaySua;

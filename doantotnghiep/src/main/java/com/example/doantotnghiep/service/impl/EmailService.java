@@ -111,15 +111,15 @@ public class EmailService implements IEmailService {
                         "<body style=\"display: flex; height: 100vh;\">\n" +
                         "        <div style=\"width: 830px; height: 80%; text-align: center; background-color: white; margin: auto; border-radius: 20px; border: 5px solid #3b82f6;\">\n" +
                         "            <img style=\"width: 400px; margin-top: 5%;\" src='cid:identifier1234'>\n" +
-                        "            <h1 style=\"margin: 5%;\">BLUCECO GLOBAL TODO APP REGISTER</h1>\n" +
+                        "            <h1 style=\"margin: 5%;\">HUY HUNG SHOP APP REGISTER</h1>\n" +
                         "            <div style=\"width: 60%; height: 50%; margin: auto; background-color: white; border: 1px solid black; border-radius: 20px;\">\n" +
                         "                <h1>Hi  "+Name +",</h1>\n" +
-                        "                <p>You have just registered a TODO APP account of BLUECO-GLOBAL company. </br>\n" +
+                        "                <p>You have just registered a TODO APP account of Shop Shoes. </br>\n" +
                         "                    To verify your account, please click the button below.</p>\n" +
                         "                <a style=\"background-color: #3b82f6; padding: 10px; border: 1px solid gray; text-decoration: none; color: white;\" href=\"" + url + "\">Click link please!!!</a>\n" +
                         "                <p>If you do not fulfill this request please ignore it or if you need assistance contact us immediately.</p>\n" +
                         "                <p>Best Regards, <br>\n" +
-                        "                    Blueco Global Corp.</p>\n" +
+                        "                    Shoes Shop.</p>\n" +
                         "            </div>\n" +
                         "        </div>\n" +
                         "</body>" +
@@ -153,18 +153,18 @@ public class EmailService implements IEmailService {
                         "<body style=\"display: flex; height: 900px;\">\n" +
                         "        <div style=\"width: 830px; height: 80%; text-align: center; background-color: white; margin: auto; border-radius: 20px; border: 5px solid #3b82f6;\">\n" +
                         "            <img style=\"width: 400px; margin-top: 5%;\" src='cid:identifier1234'>\n" +
-                        "            <h1 style=\"margin: 5%;\">BLUCECO GLOBAL TODO APP OTP</h1>\n" +
+                        "            <h1 style=\"margin: 5%;\">HUY HUNG SHOP TODO APP OTP</h1>\n" +
                         "            <div>\n" +
                         "                <div style=\"width: 60%; height: 50%; margin: auto; background-color: white; border: 1px solid black; border-radius: 20px;\">\n" +
                         "                    <h1>Hi "+Name +",</h1>\n" +
-                        "                    <p>You have just received a confirmation OTP at BLUECO GLOBAL:</p>\n" +
+                        "                    <p>You have just received a confirmation OTP at HUY HUNG SHOP:</p>\n" +
                         "                    <span style=\"border: 1px solid black; font-size: 40px; color: #3b82f6; border-radius: 3px; padding: 5px;\">\n" +
                         otp +
                         "                        \n" +
                         "                    </span>\n" +
                         "                    <p>If you do not fulfill this request please ignore it or if you need assistance contact us immediately.</p>\n" +
                         "                    <p>Best Regards, <br>\n" +
-                        "                        Blueco Global Corp.</p>\n" +
+                        "                        HUY HUNG SHOP.</p>\n" +
                         "                </div>\n" +
                         "            </div>\n" +
                         "        </div>\n" +
@@ -173,7 +173,7 @@ public class EmailService implements IEmailService {
 
                 helper.setText(body, true);
 
-                FileSystemResource res = new FileSystemResource(new File("logo.png"));
+                FileSystemResource res = new FileSystemResource(new File("logo.gif"));
                 helper.addInline("identifier1234", res);
             }
         };
