@@ -1,8 +1,9 @@
 *------------------------------------------------------------------------------
 * BAI 4 - HUNGNH.CUST.ACCT.LIST
 *------------------------------------------------------------------------------
-* Input  : Y.CUST.ID  (ma khach hang - gan gia tri truoc khi CALL)
-* Output : Y.OUT      (moi dong 1 tai khoan, phan cach @FM)
+* Input  : Y.CUST.ID  (ma khach hang)
+* Output : Y.OUT      (moi attribute la 1 tai khoan;
+*                      cac cot trong dong phan cach bang @VM)
 *          Vi tri 1 : VN.FULL.NAME
 *          Vi tri 2 : NATIONAL.ID
 *          Vi tri 3 : So tai khoan
@@ -12,13 +13,12 @@
 * Logic  : CUSTOMER -> CUSTOMER.ACCOUNT -> ACCOUNT
 * CUSTOMER.ACCOUNT khong can file layout (theo de bai)
 *------------------------------------------------------------------------------
-SUBROUTINE HUNGNH.CUST.ACCT.LIST
+SUBROUTINE HUNGNH.CUST.ACCT.LIST(Y.CUST.ID, Y.OUT)
 *------------------------------------------------------------------------------
     $INSERT I_COMMON
     $INSERT I_EQUATE
     $INSERT I_F.CUSTOMER
     $INSERT I_F.ACCOUNT
-    $INSERT I_F.CUSTOMER.ACCOUNT
 
     GOSUB INITIALISE
     GOSUB PROCESS
@@ -40,6 +40,12 @@ INITIALISE:
     CALL OPF(FN.ACCOUNT, F.ACCOUNT)
 
     Y.OUT = ''
+    Y.POS.VN.NAME = ''
+    Y.POS.NAT.ID = ''
+
+*   Lay vi tri hai local field tren CUSTOMER
+    CALL GET.LOC.REF('CUSTOMER', 'VN.FULL.NAME', Y.POS.VN.NAME)
+    CALL GET.LOC.REF('CUSTOMER', 'NATIONAL.ID', Y.POS.NAT.ID)
 
     RETURN
 *------------------------------------------------------------------------------
@@ -55,13 +61,20 @@ PROCESS:
         RETURN
     END
 
-*   VN.FULL.NAME - uu tien LOCAL.REF, neu khong co thi lay SHORT.NAME
+*   VN.FULL.NAME va NATIONAL.ID tren local reference cua CUSTOMER
     Y.VN.NAME = R.CUSTOMER<EB.CUS.SHORT.NAME>
-    IF R.CUSTOMER<EB.CUS.LOCAL.REF, 1> NE '' THEN
-        Y.VN.NAME = R.CUSTOMER<EB.CUS.LOCAL.REF, 1>
+    IF Y.POS.VN.NAME NE '' THEN
+        IF R.CUSTOMER<EB.CUS.LOCAL.REF, Y.POS.VN.NAME> NE '' THEN
+            Y.VN.NAME = R.CUSTOMER<EB.CUS.LOCAL.REF, Y.POS.VN.NAME>
+        END
     END
 
     Y.NAT.ID = R.CUSTOMER<EB.CUS.LEGAL.ID>
+    IF Y.POS.NAT.ID NE '' THEN
+        IF R.CUSTOMER<EB.CUS.LOCAL.REF, Y.POS.NAT.ID> NE '' THEN
+            Y.NAT.ID = R.CUSTOMER<EB.CUS.LOCAL.REF, Y.POS.NAT.ID>
+        END
+    END
 
 *   --- 2. Doc CUSTOMER.ACCOUNT (key = ma KH) ---
     CALL F.READ(FN.CUST.ACCT, F.CUST.ACCT, Y.CUST.ID, R.CUST.ACCT, F.CA.ERR, '')
@@ -69,10 +82,12 @@ PROCESS:
         RETURN
     END
 
-    Y.NO.ACCT = DCOUNT(R.CUST.ACCT<EB.CUSTOMER.ACCOUNT.ACCOUNT>, @VM)
+*   De bai yeu cau khong dung file layout CUSTOMER.ACCOUNT:
+*   danh sach so tai khoan nam o attribute 1
+    Y.NO.ACCT = DCOUNT(R.CUST.ACCT<1>, @VM)
 
     FOR Y.I = 1 TO Y.NO.ACCT
-        Y.ACCT.NO = R.CUST.ACCT<EB.CUSTOMER.ACCOUNT.ACCOUNT, Y.I>
+        Y.ACCT.NO = R.CUST.ACCT<1, Y.I>
         IF Y.ACCT.NO EQ '' THEN
             GOTO NEXT.ACCT
         END
@@ -86,7 +101,7 @@ PROCESS:
         Y.WORK.BAL = R.ACCOUNT<AC.WORKING.BALANCE>
         Y.ACCT.OFF = R.ACCOUNT<AC.ACCOUNT.OFFICER>
 
-        Y.OUT<-1> = Y.VN.NAME : @FM : Y.NAT.ID : @FM : Y.ACCT.NO : @FM : Y.WORK.BAL : @FM : Y.ACCT.OFF
+        Y.OUT<-1> = Y.VN.NAME : @VM : Y.NAT.ID : @VM : Y.ACCT.NO : @VM : Y.WORK.BAL : @VM : Y.ACCT.OFF
 
 NEXT.ACCT:
     NEXT Y.I
