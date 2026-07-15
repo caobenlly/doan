@@ -1,0 +1,56 @@
+================================================================================
+BAI 4 - NOP BAI
+================================================================================
+
+Program name : HUNGNH.CUST.ACCT.LIST
+Thu muc code : HUNGNH.BP  (hoac MBC.BP.DEV/HUNGNH.BP tren server)
+
+================================================================================
+PGM.FILE
+================================================================================
+  @ID     : HUNGNH.CUST.ACCT.LIST
+  TYPE    : S
+  PRODUCT : EB
+
+================================================================================
+LOGIC (theo de bai)
+================================================================================
+  Input  : Y.CUST.ID (ma khach hang)
+  Output : Y.OUT - danh sach tai khoan
+
+  Buoc 1: Doc CUSTOMER theo Y.CUST.ID
+          -> lay VN.FULL.NAME, NATIONAL.ID
+
+  Buoc 2: Doc CUSTOMER.ACCOUNT (key = ma KH)
+          -> lay danh sach so tai khoan
+
+  Buoc 3: Voi moi so TK, doc ACCOUNT
+          -> lay WORKING.BALANCE, ACCOUNT.OFFICER
+
+  CUSTOMER.ACCOUNT khong can file layout (theo de)
+
+================================================================================
+CACH TEST TREN SERVER (jsh)
+================================================================================
+  Y.CUST.ID = '100001'    ; * thay ma KH that
+  Y.OUT = ''
+  CALL HUNGNH.CUST.ACCT.LIST
+  PRINT Y.OUT
+
+================================================================================
+COMPILE
+================================================================================
+  tCompile HUNGNH.CUST.ACCT.LIST
+
+  Neu loi permission JAR -> code van nop duoc, bao thay compile ho
+
+================================================================================
+LUU Y
+================================================================================
+  - Bai 4 chi can 1 PROGRAM (file .b nay)
+  - ENQUIRY / BUILD / NOFILE SS la phan mo rong de chay tren T24, KHONG bat buoc nop
+
+================================================================================
+FILE NOP
+================================================================================
+  HUNGNH.CUST.ACCT.LIST.b
