@@ -1,0 +1,58 @@
+================================================================================
+CAU HINH ENQ.HUNGNH.CUST.ACCT - BAI 4 (2 ROUTINE)
+================================================================================
+
+Routine su dung:
+  1. HUNGNH.CUST.ACCT.LIST        - doc du lieu
+  2. HUNGNH.ENQ.CUST.ACCT.BUILD   - RTN.CALL (tra RETURN.ARRAY)
+
+================================================================================
+STANDARD.SELECTION - NOFILE.HUNGNH.CUST.ACCT
+================================================================================
+  USR 1:  CUSTOMER.ID   Type S   Field No 1   Display 10L   Single S
+  USR 2:  F1            Type D   Field No 0   Display 35L   Single S
+  USR 3:  F2            Type D   Field No 0   Display 15L   Single S
+  USR 4:  F3            Type D   Field No 0   Display 16L   Single S
+  USR 5:  F4            Type D   Field No 0   Display 20L   Single S
+  USR 6:  F5            Type D   Field No 0   Display 10L   Single S
+  USR 7:  RET.DATA      Type D   Field No 0   Display 1000L Single S
+  USR 8:  RTN.CALL      Type R   Field No = HUNGNH.ENQ.CUST.ACCT.BUILD  Single S
+
+  Commit + Authorize
+
+================================================================================
+ENQUIRY - ENQ.HUNGNH.CUST.ACCT
+================================================================================
+  PAGE.SIZE .............. 4,19
+  FILE.NAME .............. NOFILE.HUNGNH.CUST.ACCT
+  BUILD.ROUTINE .......... (de trong)
+  Fixed Selection.1 ...... RTN.CALL
+  Fixed Sel Op.1 ......... NE
+  Fixed Sel Val.1 ........ NULL
+  SELECTION.FLDS.1 ....... CUSTOMER.ID
+  SEL FL OPER.1 .......... EQ
+
+  Dong 1 (an):
+    RET.DATA | RET.DATA | Length 1000L | (khong Column)
+
+  Dong 2-6:
+    F1 | F RET.DATA | Col 1 | F *,1,1 | Ten KH
+    F2 | F RET.DATA | Col 2 | F *,2,2 | CMND
+    F3 | F RET.DATA | Col 3 | F *,3,3 | So TK
+    F4 | F RET.DATA | Col 4 | F *,4,4 | So du
+    F5 | F RET.DATA | Col 5 | F *,5,5 | AO
+
+  Commit + Authorize
+
+================================================================================
+PGM.FILE (ca 2 routine, TYPE = S, PRODUCT = EB)
+================================================================================
+  HUNGNH.CUST.ACCT.LIST
+  HUNGNH.ENQ.CUST.ACCT.BUILD
+
+  Sau khi sua code -> Compile lai HUNGNH.ENQ.CUST.ACCT.BUILD
+
+================================================================================
+TEST
+================================================================================
+  Chay ENQ.HUNGNH.CUST.ACCT, nhap CUSTOMER.ID co tai khoan
